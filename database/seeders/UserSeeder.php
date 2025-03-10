@@ -15,7 +15,7 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         // Create super admin user
-        $superAdmin = User::firstOrCreate(
+        $superAdmin = User::query()->firstOrCreate(
             ['email' => 'superadmin@example.com'],
             [
                 'first_name' => 'Super',
@@ -35,7 +35,7 @@ class UserSeeder extends Seeder
         $superAdmin->assignRole(config('acl.roles.sadmin.name'));
 
         // Create admin user
-        $admin = User::firstOrCreate(
+        $admin = User::query()->firstOrCreate(
             ['email' => 'admin@example.com'],
             [
                 'first_name' => 'Admin',
@@ -55,7 +55,7 @@ class UserSeeder extends Seeder
         $admin->assignRole(config('acl.roles.admin.name'));
 
         // Create editor user
-        $editor = User::firstOrCreate(
+        $editor = User::query()->firstOrCreate(
             ['email' => 'editor@example.com'],
             [
                 'first_name' => 'Editor',
@@ -75,7 +75,7 @@ class UserSeeder extends Seeder
         $editor->assignRole(config('acl.roles.editor.name'));
 
         // Create regular user
-        $user = User::firstOrCreate(
+        $user = User::query()->firstOrCreate(
             ['email' => 'user@example.com'],
             [
                 'first_name' => 'Regular',
@@ -95,13 +95,13 @@ class UserSeeder extends Seeder
         $user->assignRole(config('acl.roles.user.name'));
 
         // Create additional users for testing if in development environment
-        if (app()->environment('local', 'development', 'testing')) {
-            User::factory()
-                ->count(10)
-                ->create()
-                ->each(function ($user) {
-                    $user->assignRole('user');
-                });
-        }
+//        if (app()->environment('local', 'development', 'testing')) {
+//            User::factory()
+//                ->count(10)
+//                ->create()
+//                ->each(function ($user) {
+//                    $user->assignRole('user');
+//                });
+//        }
     }
 }

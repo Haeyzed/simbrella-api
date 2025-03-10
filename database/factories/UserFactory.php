@@ -34,7 +34,7 @@ class UserFactory extends Factory
             'phone' => $this->faker->phoneNumber(),
             'bio' => $this->faker->paragraph(),
             'country' => $this->faker->country(),
-            'state' => $this->faker->state(),
+            'state' => $this->faker->country(),
             'postal_code' => $this->faker->postcode(),
             'email_verified_at' => now(),
             'password' => Hash::make('password'), // Default password for testing
