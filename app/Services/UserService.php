@@ -232,25 +232,21 @@ class UserService
      */
     public function assignRoleToUser(User $user, array $roles): User
     {
-        return DB::transaction(function () use ($user, $roles) {
-            // Get role models
-            $roleModels = Role::whereIn('name', $roles)->get();
+        $roleIds = Role::query()->whereIn('name', $roles)->pluck('id')->toArray();
+        $permissionIds = DB::table('role_has_permissions')
+            ->whereIn('role_id', $roleIds)
+            ->pluck('permission_id')
+            ->unique()
+            ->toArray();
 
-            // Get permissions from these roles
-            $permissionIds = DB::table('role_has_permissions')
-                ->whereIn('role_id', $roleModels->pluck('id')->toArray())
-                ->pluck('permission_id')
-                ->unique()
-                ->toArray();
+        $permissions = Permission::query()->whereIn('id', $permissionIds)->pluck('name')->toArray();
 
-            $permissions = Permission::whereIn('id', $permissionIds)->pluck('name')->toArray();
-
-            // Assign roles and permissions
+        DB::transaction(function () use ($user, $roles, $permissions, $permissionIds) {
             $user->syncRoles($roles);
-            $user->syncPermissions($permissions);
-
-            return $user->load(['roles', 'permissions']);
+            $user->givePermissionTo($permissionIds);
         });
+
+        return $user->load(['roles', 'permissions']);
     }
 
     /**
@@ -262,22 +258,21 @@ class UserService
      */
     public function removeRoleFromUser(User $user, array $roles): User
     {
-        return DB::transaction(function () use ($user, $roles) {
-            // Get current roles
-            $currentRoles = $user->roles->pluck('name')->toArray();
+        $roleIds = Role::query()->whereIn('name', $roles)->pluck('id')->toArray();
+        $permissionIds = DB::table('role_has_permissions')
+            ->whereIn('role_id', $roleIds)
+            ->pluck('permission_id')
+            ->unique()
+            ->toArray();
 
-            // Filter out roles to remove
-            $remainingRoles = array_diff($currentRoles, $roles);
+        $permissions = Permission::query()->whereIn('id', $permissionIds)->pluck('name')->toArray();
 
-            // Sync remaining roles
-            $user->syncRoles($remainingRoles);
-
-            // Update permissions based on remaining roles
-            $permissions = $user->getPermissionsViaRoles();
-            $user->syncPermissions($permissions);
-
-            return $user->load(['roles', 'permissions']);
+        DB::transaction(function () use ($user, $roles, $permissions, $permissionIds) {
+            $user->syncRoles($roles);
+            $user->removePermission($permissionIds);
         });
+
+        return $user->load(['roles', 'permissions']);
     }
 
     /**
