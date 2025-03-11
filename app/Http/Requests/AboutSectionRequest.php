@@ -49,7 +49,6 @@ class AboutSectionRequest extends BaseRequest
                 $this->isMethod('post') ? 'required' : 'nullable',
                 'image',
                 'mimes:jpeg,png,jpg,gif',
-                'min:500',
                 'max:2048'
             ],
 
