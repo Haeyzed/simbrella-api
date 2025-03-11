@@ -54,6 +54,7 @@ return [
     |
     */
     'paths' => [
+        'about_images' => env('FILESTORAGE_ABOUT_IMAGES_PATH', 'about/images'),
         'blog_banners' => env('FILESTORAGE_BLOG_BANNERS_PATH', 'blog/banners'),
         'blog_images' => env('FILESTORAGE_BLOG_IMAGES_PATH', 'blog/images'),
         'user_profiles' => env('FILESTORAGE_USER_PROFILES_PATH', 'user/profiles'),
