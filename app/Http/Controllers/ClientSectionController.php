@@ -34,15 +34,24 @@ class ClientSectionController extends Controller
     protected ACLService $ACLService;
 
     /**
+     * @var bool
+     */
+    protected bool $isPublicRoute = false;
+
+    /**
      * ClientSectionController constructor.
      *
      * @param ClientSectionService $clientSectionService
      * @param ACLService $ACLService
+     * @param Request $request
      */
-    public function __construct(ClientSectionService $clientSectionService, ACLService $ACLService)
+    public function __construct(ClientSectionService $clientSectionService, ACLService $ACLService, Request $request)
     {
         $this->clientSectionService = $clientSectionService;
         $this->ACLService = $ACLService;
+
+        // Check if this is a public route
+        $this->isPublicRoute = str_contains($request->route()->getPrefix(), 'public');
     }
 
     /**
@@ -64,7 +73,11 @@ class ClientSectionController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
-        $this->ACLService->checkUserPermission(config('acl.permissions.home_page_view.name'));
+        // Skip permission check for public routes
+        if (!$this->isPublicRoute) {
+            $this->ACLService->checkUserPermission(config('acl.permissions.home_page_view.name'));
+        }
+
         $clientSections = $this->clientSectionService->list($request);
         return response()->paginatedSuccess(ClientSectionResource::collection($clientSections), 'Client sections retrieved successfully');
     }
@@ -100,7 +113,11 @@ class ClientSectionController extends Controller
      */
     public function show(ClientSection $clientSection): JsonResponse
     {
-        $this->ACLService->checkUserPermission(config('acl.permissions.home_page_view.name'));
+        // Skip permission check for public routes
+        if (!$this->isPublicRoute) {
+            $this->ACLService->checkUserPermission(config('acl.permissions.home_page_view.name'));
+        }
+
         return response()->success(new ClientSectionResource($clientSection->load('caseStudy')), 'Client section retrieved successfully');
     }
 

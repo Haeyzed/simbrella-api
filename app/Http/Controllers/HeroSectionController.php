@@ -34,15 +34,24 @@ class HeroSectionController extends Controller
     protected ACLService $ACLService;
 
     /**
+     * @var bool
+     */
+    protected bool $isPublicRoute = false;
+
+    /**
      * HeroSectionController constructor.
      *
      * @param HeroSectionService $heroSectionService
      * @param ACLService $ACLService
+     * @param Request $request
      */
-    public function __construct(HeroSectionService $heroSectionService, ACLService $ACLService)
+    public function __construct(HeroSectionService $heroSectionService, ACLService $ACLService, Request $request)
     {
         $this->heroSectionService = $heroSectionService;
         $this->ACLService = $ACLService;
+
+        // Check if this is a public route
+        $this->isPublicRoute = str_contains($request->route()->getPrefix(), 'public');
     }
 
     /**
@@ -64,7 +73,11 @@ class HeroSectionController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
-        $this->ACLService->checkUserPermission(config('acl.permissions.home_page_view.name'));
+        // Skip permission check for public routes
+        if (!$this->isPublicRoute) {
+            $this->ACLService->checkUserPermission(config('acl.permissions.home_page_view.name'));
+        }
+
         $heroSections = $this->heroSectionService->list($request);
         return response()->paginatedSuccess(HeroSectionResource::collection($heroSections), 'Hero sections retrieved successfully');
     }
@@ -105,7 +118,11 @@ class HeroSectionController extends Controller
      */
     public function show(HeroSection $heroSection): JsonResponse
     {
-        $this->ACLService->checkUserPermission(config('acl.permissions.home_page_view.name'));
+        // Skip permission check for public routes
+        if (!$this->isPublicRoute) {
+            $this->ACLService->checkUserPermission(config('acl.permissions.home_page_view.name'));
+        }
+
         return response()->success(new HeroSectionResource($heroSection->load(['images'])), 'Hero section retrieved successfully');
     }
 

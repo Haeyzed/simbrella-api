@@ -11,6 +11,7 @@ use App\Services\CareerService;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class CareerController extends Controller
 {
@@ -25,15 +26,24 @@ class CareerController extends Controller
     protected ACLService $ACLService;
 
     /**
+     * @var bool
+     */
+    protected bool $isPublicRoute = false;
+
+    /**
      * CareerController constructor.
      *
      * @param CareerService $careerService
      * @param ACLService $ACLService
+     * @param Request $request
      */
-    public function __construct(CareerService $careerService, ACLService $ACLService)
+    public function __construct(CareerService $careerService, ACLService $ACLService, Request $request)
     {
         $this->careerService = $careerService;
         $this->ACLService = $ACLService;
+
+        // Check if this is a public route
+        $this->isPublicRoute = str_contains($request->route()->getPrefix(), 'public');
     }
 
     /**
@@ -55,7 +65,11 @@ class CareerController extends Controller
      */
     public function index(ListCareerRequest $request): JsonResponse
     {
-        $this->ACLService->checkUserPermission(config('acl.permissions.career_view.name'));
+        // Skip permission check for public routes
+        if (!$this->isPublicRoute) {
+            $this->ACLService->checkUserPermission(config('acl.permissions.career_view.name'));
+        }
+
         $careers = $this->careerService->list($request);
         return response()->paginatedSuccess(CareerResource::collection($careers), 'Career postings retrieved successfully');
     }
@@ -96,7 +110,11 @@ class CareerController extends Controller
      */
     public function show(Career $career): JsonResponse
     {
-        $this->ACLService->checkUserPermission(config('acl.permissions.career_view.name'));
+        // Skip permission check for public routes
+        if (!$this->isPublicRoute) {
+            $this->ACLService->checkUserPermission(config('acl.permissions.career_view.name'));
+        }
+
         return response()->success(new CareerResource($career), 'Career posting retrieved successfully');
     }
 

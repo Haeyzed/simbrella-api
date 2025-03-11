@@ -34,15 +34,24 @@ class AboutSectionController extends Controller
     protected ACLService $ACLService;
 
     /**
+     * @var bool
+     */
+    protected bool $isPublicRoute = false;
+
+    /**
      * AboutSectionController constructor.
      *
      * @param AboutSectionService $aboutSectionService
      * @param ACLService $ACLService
+     * @param Request $request
      */
-    public function __construct(AboutSectionService $aboutSectionService, ACLService $ACLService)
+    public function __construct(AboutSectionService $aboutSectionService, ACLService $ACLService, Request $request)
     {
         $this->aboutSectionService = $aboutSectionService;
         $this->ACLService = $ACLService;
+
+        // Check if this is a public route
+        $this->isPublicRoute = str_contains($request->route()->getPrefix(), 'public');
     }
 
     /**
@@ -64,7 +73,11 @@ class AboutSectionController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
-        $this->ACLService->checkUserPermission(config('acl.permissions.home_page_view.name'));
+        // Skip permission check for public routes
+        if (!$this->isPublicRoute) {
+            $this->ACLService->checkUserPermission(config('acl.permissions.home_page_view.name'));
+        }
+
         $aboutSections = $this->aboutSectionService->list($request);
         return response()->paginatedSuccess(AboutSectionResource::collection($aboutSections), 'About sections retrieved successfully');
     }
@@ -105,7 +118,11 @@ class AboutSectionController extends Controller
      */
     public function show(AboutSection $aboutSection): JsonResponse
     {
-        $this->ACLService->checkUserPermission(config('acl.permissions.home_page_view.name'));
+        // Skip permission check for public routes
+        if (!$this->isPublicRoute) {
+            $this->ACLService->checkUserPermission(config('acl.permissions.home_page_view.name'));
+        }
+
         return response()->success(new AboutSectionResource($aboutSection), 'About section retrieved successfully');
     }
 

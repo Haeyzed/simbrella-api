@@ -34,15 +34,24 @@ class ServiceSectionController extends Controller
     protected ACLService $ACLService;
 
     /**
+     * @var bool
+     */
+    protected bool $isPublicRoute = false;
+
+    /**
      * ServiceSectionController constructor.
      *
      * @param ServiceSectionService $serviceSectionService
      * @param ACLService $ACLService
+     * @param Request $request
      */
-    public function __construct(ServiceSectionService $serviceSectionService, ACLService $ACLService)
+    public function __construct(ServiceSectionService $serviceSectionService, ACLService $ACLService, Request $request)
     {
         $this->serviceSectionService = $serviceSectionService;
         $this->ACLService = $ACLService;
+
+        // Check if this is a public route
+        $this->isPublicRoute = str_contains($request->route()->getPrefix(), 'public');
     }
 
     /**
@@ -64,7 +73,11 @@ class ServiceSectionController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
-        $this->ACLService->checkUserPermission(config('acl.permissions.home_page_view.name'));
+        // Skip permission check for public routes
+        if (!$this->isPublicRoute) {
+            $this->ACLService->checkUserPermission(config('acl.permissions.home_page_view.name'));
+        }
+
         $serviceSections = $this->serviceSectionService->list($request);
         return response()->paginatedSuccess(ServiceSectionResource::collection($serviceSections), 'Service sections retrieved successfully');
     }
@@ -105,7 +118,11 @@ class ServiceSectionController extends Controller
      */
     public function show(ServiceSection $serviceSection): JsonResponse
     {
-        $this->ACLService->checkUserPermission(config('acl.permissions.home_page_view.name'));
+        // Skip permission check for public routes
+        if (!$this->isPublicRoute) {
+            $this->ACLService->checkUserPermission(config('acl.permissions.home_page_view.name'));
+        }
+
         return response()->success(new ServiceSectionResource($serviceSection), 'Service section retrieved successfully');
     }
 

@@ -34,15 +34,24 @@ class ProductSectionController extends Controller
     protected ACLService $ACLService;
 
     /**
+     * @var bool
+     */
+    protected bool $isPublicRoute = false;
+
+    /**
      * ProductSectionController constructor.
      *
      * @param ProductSectionService $productSectionService
      * @param ACLService $ACLService
+     * @param Request $request
      */
-    public function __construct(ProductSectionService $productSectionService, ACLService $ACLService)
+    public function __construct(ProductSectionService $productSectionService, ACLService $ACLService, Request $request)
     {
         $this->productSectionService = $productSectionService;
         $this->ACLService = $ACLService;
+
+        // Check if this is a public route
+        $this->isPublicRoute = str_contains($request->route()->getPrefix(), 'public');
     }
 
     /**
@@ -64,7 +73,11 @@ class ProductSectionController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
-        $this->ACLService->checkUserPermission(config('acl.permissions.home_page_view.name'));
+        // Skip permission check for public routes
+        if (!$this->isPublicRoute) {
+            $this->ACLService->checkUserPermission(config('acl.permissions.home_page_view.name'));
+        }
+
         $productSections = $this->productSectionService->list($request);
         return response()->paginatedSuccess(ProductSectionResource::collection($productSections), 'Product sections retrieved successfully');
     }
@@ -105,7 +118,11 @@ class ProductSectionController extends Controller
      */
     public function show(ProductSection $productSection): JsonResponse
     {
-        $this->ACLService->checkUserPermission(config('acl.permissions.home_page_view.name'));
+        // Skip permission check for public routes
+        if (!$this->isPublicRoute) {
+            $this->ACLService->checkUserPermission(config('acl.permissions.home_page_view.name'));
+        }
+
         return response()->success(new ProductSectionResource($productSection), 'Product section retrieved successfully');
     }
 

@@ -12,6 +12,7 @@ use App\Services\MessageService;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 /**
  * Message Controller
@@ -39,16 +40,25 @@ class MessageController extends Controller
     protected ACLService $ACLService;
 
     /**
+     * @var bool
+     */
+    protected bool $isPublicRoute = false;
+
+    /**
      * MessageController constructor.
      *
      * @param MessageService $messageService The message service instance.
      * @param ACLService $ACLService The ACL service instance.
+     * @param Request $request
      * @return void
      */
-    public function __construct(MessageService $messageService, ACLService $ACLService)
+    public function __construct(MessageService $messageService, ACLService $ACLService, Request $request)
     {
         $this->messageService = $messageService;
         $this->ACLService = $ACLService;
+
+        // Check if this is a public route
+        $this->isPublicRoute = str_contains($request->route()->getPrefix(), 'public');
     }
 
     /**
@@ -97,6 +107,7 @@ class MessageController extends Controller
     public function store(MessageRequest $request): JsonResponse
     {
         try {
+            // No permission check needed as this is always accessible
             $message = $this->messageService->create($request->validated());
             return response()->success(new MessageResource($message), 'Message sent successfully');
         } catch (Exception $e) {

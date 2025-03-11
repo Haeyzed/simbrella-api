@@ -10,6 +10,7 @@ use App\Services\ContactInformationService;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 /**
  * Contact Information Controller
@@ -37,16 +38,25 @@ class ContactInformationController extends Controller
     protected ACLService $ACLService;
 
     /**
+     * @var bool
+     */
+    protected bool $isPublicRoute = false;
+
+    /**
      * ContactInformationController constructor.
      *
      * @param ContactInformationService $contactInformationService The contact information service instance.
      * @param ACLService $ACLService The ACL service instance.
+     * @param Request $request
      * @return void
      */
-    public function __construct(ContactInformationService $contactInformationService, ACLService $ACLService)
+    public function __construct(ContactInformationService $contactInformationService, ACLService $ACLService, Request $request)
     {
         $this->contactInformationService = $contactInformationService;
         $this->ACLService = $ACLService;
+
+        // Check if this is a public route
+        $this->isPublicRoute = str_contains($request->route()->getPrefix(), 'public');
     }
 
     /**
@@ -64,6 +74,7 @@ class ContactInformationController extends Controller
      */
     public function show(): JsonResponse
     {
+        // No permission check needed as this is always accessible
         $contactInformation = ContactInformation::with('user')->latest()->first();
         return response()->success(
             new ContactInformationResource($contactInformation),

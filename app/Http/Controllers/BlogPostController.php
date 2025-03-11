@@ -11,6 +11,7 @@ use App\Services\BlogPostService;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 /**
  * Blog Post Controller
@@ -34,15 +35,24 @@ class BlogPostController extends Controller
     protected ACLService $ACLService;
 
     /**
+     * @var bool
+     */
+    protected bool $isPublicRoute = false;
+
+    /**
      * BlogPostController constructor.
      *
      * @param BlogPostService $blogPostService
      * @param ACLService $ACLService
+     * @param Request $request
      */
-    public function __construct(BlogPostService $blogPostService, ACLService $ACLService)
+    public function __construct(BlogPostService $blogPostService, ACLService $ACLService, Request $request)
     {
         $this->blogPostService = $blogPostService;
         $this->ACLService = $ACLService;
+
+        // Check if this is a public route
+        $this->isPublicRoute = str_contains($request->route()->getPrefix(), 'public');
     }
 
     /**
@@ -64,7 +74,11 @@ class BlogPostController extends Controller
      */
     public function index(ListBlogPostRequest $request): JsonResponse
     {
-        $this->ACLService->checkUserPermission(config('acl.permissions.blog_view.name'));
+        // Skip permission check for public routes
+        if (!$this->isPublicRoute) {
+            $this->ACLService->checkUserPermission(config('acl.permissions.blog_view.name'));
+        }
+
         $blogPosts = $this->blogPostService->list($request);
         return response()->paginatedSuccess(BlogPostResource::collection($blogPosts), 'Blog posts retrieved successfully');
     }
@@ -105,7 +119,11 @@ class BlogPostController extends Controller
      */
     public function show(BlogPost $blogPost): JsonResponse
     {
-        $this->ACLService->checkUserPermission(config('acl.permissions.blog_view.name'));
+        // Skip permission check for public routes
+        if (!$this->isPublicRoute) {
+            $this->ACLService->checkUserPermission(config('acl.permissions.blog_view.name'));
+        }
+
         return response()->success(new BlogPostResource($blogPost->load(['user', 'images'])), 'Blog post retrieved successfully');
     }
 
