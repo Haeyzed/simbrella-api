@@ -74,7 +74,7 @@ class HeroSectionRequest extends BaseRequest
     {
         return [
             'images.min' => 'At least 3 images are required for the hero section.',
-            'images.*.max' => 'Each image must not be larger than 500KB.',
+            'images.*.max' => 'Each image must not be larger than 2MB.',
         ];
     }
 }
