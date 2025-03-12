@@ -95,13 +95,13 @@ class UserSeeder extends Seeder
         $user->assignRole(config('acl.roles.user.name'));
 
         // Create additional users for testing if in development environment
-        if (app()->environment('local', 'development', 'testing')) {
-            User::factory()
-                ->count(10)
-                ->create()
-                ->each(function ($user) {
-                    $user->assignRole('user');
-                });
-        }
+//        if (app()->environment('local', 'development', 'testing')) {
+//            User::factory()
+//                ->count(10)
+//                ->create()
+//                ->each(function ($user) {
+//                    $user->assignRole('user');
+//                });
+//        }
     }
 }
