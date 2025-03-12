@@ -37,7 +37,7 @@ class HeroSectionRequest extends BaseRequest
              * @var string|null $subtitle
              * @example "Your success starts here."
              */
-            'subtitle' => ['nullable', 'string', 'max:255'],
+            'subtitle' => ['nullable', 'string'],
 
             /**
              * The status of the hero section.
@@ -61,7 +61,7 @@ class HeroSectionRequest extends BaseRequest
              * @var string $images.*
              * @example "hero-banner.jpg"
              */
-            'images.*' => ['required', 'image', 'mimes:jpeg,png,jpg,gif', 'max:500'],
+            'images.*' => ['required', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
         ];
     }
 
