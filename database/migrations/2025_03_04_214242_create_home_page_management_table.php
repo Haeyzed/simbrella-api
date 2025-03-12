@@ -36,7 +36,7 @@ return new class extends Migration
             $table->string('title_short')->nullable();
             $table->text('summary');
             $table->string('summary_short')->nullable();
-            $table->string('icon')->nullable();
+            $table->string('icon_path')->nullable();
             $table->string('image_path')->nullable();
             $table->integer('order')->default(0);
             $table->string('status')->default(SectionStatusEnum::DRAFT->value);

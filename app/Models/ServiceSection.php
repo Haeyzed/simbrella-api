@@ -26,7 +26,7 @@ class ServiceSection extends Model
         'title_short',
         'summary',
         'summary_short',
-        'icon',
+        'icon_path',
         'image_path',
         'order',
         'status',
@@ -41,6 +41,20 @@ class ServiceSection extends Model
     protected $casts = [
         'status' => SectionStatusEnum::class,
     ];
+
+    /**
+     * Get the image URL attribute.
+     *
+     * @return string|null
+     */
+    public function getIconUrlAttribute(): ?string
+    {
+        if (!$this->icon_path) {
+            return null;
+        }
+
+        return app(StorageService::class)->url($this->icon_path);
+    }
 
     /**
      * Get the image URL attribute.

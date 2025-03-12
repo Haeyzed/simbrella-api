@@ -74,6 +74,14 @@ class ServiceSectionResource extends JsonResource
             'icon' => $this->icon,
 
             /**
+             * The icon URL of the service section.
+             *
+             * @var string|null $icon_url
+             * @example "https://example.com/storage/services/web-dev-123.jpg"
+             */
+            'icon_url' => $this->icon_url,
+
+            /**
              * The image path of the service section.
              *
              * @var string|null $image_path

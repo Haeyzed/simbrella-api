@@ -49,6 +49,7 @@ class HomePageManagementSeeder extends Seeder
                         return substr($attributes['summary'], 0, 100) . '...';
                     },
                     'image_path' => 'services/service-' . rand(1, 10) . '.jpg',
+                    'icon_path' => 'services/service-' . rand(1, 10) . '.jpg',
                 ]);
 
             // Create About Section

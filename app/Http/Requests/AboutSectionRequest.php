@@ -37,7 +37,7 @@ class AboutSectionRequest extends BaseRequest
              * @var string $summary
              * @example "We are a leading provider of..."
              */
-            'summary' => ['required', 'string', 'max:500'],
+            'summary' => ['required', 'string'],
 
             /**
              * The image representing the about section.

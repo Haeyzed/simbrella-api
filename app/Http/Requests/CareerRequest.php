@@ -37,7 +37,7 @@ class CareerRequest extends BaseRequest
              * @var string|null $subtitle
              * @example "Senior Level"
              */
-            'subtitle' => ['nullable', 'string', 'max:255'],
+            'subtitle' => ['nullable', 'string'],
 
             /**
              * The job description.
@@ -137,7 +137,7 @@ class CareerRequest extends BaseRequest
                 $this->isMethod('post') ? 'required' : 'nullable',
                 'image',
                 'mimes:jpeg,png,jpg,gif',
-                'max:500', // 500KB
+                'max:2048'
             ],
 
             /**

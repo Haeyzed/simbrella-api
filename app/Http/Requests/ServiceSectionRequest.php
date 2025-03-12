@@ -56,12 +56,11 @@ class ServiceSectionRequest extends BaseRequest
             'summary_short' => ['nullable', 'string', 'max:200'],
 
             /**
-             * The icon representing the service section.
+             * The icon for the service section.
              *
-             * @var string|null $icon
-             * @example "fa-solid fa-gear"
+             * @var file|null $icon
              */
-            'icon' => ['nullable', 'string', 'max:50'],
+            'icon' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
 
             /**
              * The image for the service section.

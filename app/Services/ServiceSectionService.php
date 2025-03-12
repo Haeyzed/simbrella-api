@@ -83,6 +83,14 @@ class ServiceSectionService
                 );
             }
 
+            if (isset($data['icon']) && $data['icon'] instanceof UploadedFile) {
+                $data['icon_path'] = $this->uploadImage(
+                    $data['icon'],
+                    config('filestorage.paths.services'),
+//                    ['resize' => [800, null]]
+                );
+            }
+
             // Create service section
             return ServiceSection::create($data)->load(['user']);
         });
@@ -110,6 +118,20 @@ class ServiceSectionService
                     config('filestorage.paths.services')
                 );
                 unset($data['image']);
+            }
+
+            // Handle icon upload
+            if (isset($data['icon']) && $data['icon'] instanceof UploadedFile) {
+                // Delete old icon if exists
+                if ($serviceSection->icon_path) {
+                    $this->storageService->delete($serviceSection->icon_path);
+                }
+
+                $data['icon_path'] = $this->uploadImage(
+                    $data['icon'],
+                    config('filestorage.paths.services')
+                );
+                unset($data['icon']);
             }
 
             // Update service section
@@ -145,6 +167,10 @@ class ServiceSectionService
             if ($serviceSection->image_path) {
                 $this->storageService->delete($serviceSection->image_path);
             }
+            // Delete icon if exists
+            if ($serviceSection->icon_path) {
+                $this->storageService->delete($serviceSection->icon_path);
+            }
 
             return $serviceSection->forceDelete();
         });
@@ -174,7 +200,7 @@ class ServiceSectionService
     {
         return DB::transaction(function () use ($orderedIds) {
             foreach ($orderedIds as $index => $id) {
-                ServiceSection::where('id', $id)->update(['order' => $index]);
+                ServiceSection::query()->where('id', $id)->update(['order' => $index]);
             }
             return true;
         });

@@ -32,7 +32,7 @@ class ServiceSectionFactory extends Factory
             'title_short' => $this->faker->words(2, true),
             'summary' => $this->faker->paragraph(3),
             'summary_short' => $this->faker->sentence(),
-            'icon' => 'fa-solid fa-' . $this->faker->randomElement(['code', 'gear', 'chart-line', 'server', 'mobile', 'globe']),
+            'icon_path' => null,
             'image_path' => null,
             'order' => $this->faker->numberBetween(0, 10),
             'status' => $this->faker->randomElement(SectionStatusEnum::values()),
@@ -66,6 +66,7 @@ class ServiceSectionFactory extends Factory
     public function withImage(): static
     {
         return $this->state(fn (array $attributes) => [
+            'icon_path' => 'services/service-' . Str::random(10) . '.jpg',
             'image_path' => 'services/service-' . Str::random(10) . '.jpg',
         ]);
     }

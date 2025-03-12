@@ -59,7 +59,7 @@ class BlogPostRequest extends BaseRequest
                 $this->isMethod('post') ? 'required' : 'nullable',
                 'image',
                 'mimes:jpeg,png,jpg,gif',
-                'max:500', // 500KB
+                'max:2048'
             ],
 
             /**
