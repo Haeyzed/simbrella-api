@@ -6,6 +6,7 @@ enum CareerStatusEnum: string
 {
     case DRAFT = 'draft';
     case PUBLISHED = 'published';
+    case OPEN = 'open';
     case CLOSED = 'closed';
     case ARCHIVED = 'archived';
 
@@ -29,6 +30,7 @@ enum CareerStatusEnum: string
         return match($this) {
             self::DRAFT => 'Draft',
             self::PUBLISHED => 'Published',
+            self::OPEN => 'Open',
             self::CLOSED => 'Closed',
             self::ARCHIVED => 'Archived',
         };
@@ -44,6 +46,7 @@ enum CareerStatusEnum: string
         return match($this) {
             self::DRAFT => '#ffc107', // Yellow
             self::PUBLISHED => '#28a745', // Green
+            self::OPEN => '#ffc107', // Red
             self::CLOSED => '#dc3545', // Red
             self::ARCHIVED => '#6c757d', // Gray
         };
