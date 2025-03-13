@@ -58,6 +58,7 @@ return [
         'blog_banners' => env('FILESTORAGE_BLOG_BANNERS_PATH', 'blog/banners'),
         'career_banners' => env('FILESTORAGE_CAREER_BANNERS_PATH', 'career/banners'),
         'blog_images' => env('FILESTORAGE_BLOG_IMAGES_PATH', 'blog/images'),
+        'hero_images' => env('FILESTORAGE_HERO_IMAGES_PATH', 'hero/images'),
         'user_profiles' => env('FILESTORAGE_USER_PROFILES_PATH', 'user/profiles'),
         'client_logos' => env('FILESTORAGE_CLIENT_LOGOS_PATH', 'client/logos'),
         'services' => env('FILESTORAGE_SERVICE_IMAGES_PATH', 'service/images'),
