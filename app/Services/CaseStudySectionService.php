@@ -87,6 +87,19 @@ class CaseStudySectionService
     }
 
     /**
+     * Upload an image to storage.
+     *
+     * @param UploadedFile $image The image file to upload.
+     * @param string $path The storage path.
+     * @param array $options Additional options for the upload.
+     * @return string The path to the uploaded image.
+     */
+    private function uploadImage(UploadedFile $image, string $path, array $options = []): string
+    {
+        return $this->storageService->upload($image, $path, $options);
+    }
+
+    /**
      * Update an existing case study section.
      *
      * @param CaseStudySection $caseStudySection The case study section to update.
@@ -159,18 +172,5 @@ class CaseStudySectionService
             $caseStudySection->restore();
             return $caseStudySection->load(['user', 'client']);
         });
-    }
-
-    /**
-     * Upload an image to storage.
-     *
-     * @param UploadedFile $image The image file to upload.
-     * @param string $path The storage path.
-     * @param array $options Additional options for the upload.
-     * @return string The path to the uploaded image.
-     */
-    private function uploadImage(UploadedFile $image, string $path, array $options = []): string
-    {
-        return $this->storageService->upload($image, $path, $options);
     }
 }

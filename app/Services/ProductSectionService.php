@@ -85,47 +85,16 @@ class ProductSectionService
     }
 
     /**
-     * Update an existing product section.
+     * Upload an image to storage.
      *
-     * @param ProductSection $productSection The product section to update.
-     * @param array $data The validated data for updating the product section.
-     * @return ProductSection The updated product section.
+     * @param UploadedFile $image The image file to upload.
+     * @param string $path The storage path.
+     * @param array $options Additional options for the upload.
+     * @return string The path to the uploaded image.
      */
-    public function update(ProductSection $productSection, array $data): ProductSection
+    private function uploadImage(UploadedFile $image, string $path, array $options = []): string
     {
-        return DB::transaction(function () use ($productSection, $data) {
-            // Handle image
-            if (isset($data['image']) && $data['image'] instanceof UploadedFile) {
-                // Delete old image if exists
-                if ($productSection->image_path) {
-                    $this->storageService->delete($productSection->image_path);
-                }
-
-                $data['image_path'] = $this->uploadImage(
-                    $data['image'],
-                    config('filestorage.paths.product_images')
-                );
-                unset($data['image']);
-            }
-
-            // Update product section
-            $productSection->update($data);
-
-            return $productSection->load(['user']);
-        });
-    }
-
-    /**
-     * Delete a product section.
-     *
-     * @param ProductSection $productSection The product section to delete.
-     * @return bool|null The result of the delete operation.
-     */
-    public function delete(ProductSection $productSection): ?bool
-    {
-        return DB::transaction(function () use ($productSection) {
-            return $productSection->delete();
-        });
+        return $this->storageService->upload($image, $path, $options);
     }
 
     /**
@@ -143,6 +112,19 @@ class ProductSectionService
             }
 
             return $productSection->forceDelete();
+        });
+    }
+
+    /**
+     * Delete a product section.
+     *
+     * @param ProductSection $productSection The product section to delete.
+     * @return bool|null The result of the delete operation.
+     */
+    public function delete(ProductSection $productSection): ?bool
+    {
+        return DB::transaction(function () use ($productSection) {
+            return $productSection->delete();
         });
     }
 
@@ -177,15 +159,33 @@ class ProductSectionService
     }
 
     /**
-     * Upload an image to storage.
+     * Update an existing product section.
      *
-     * @param UploadedFile $image The image file to upload.
-     * @param string $path The storage path.
-     * @param array $options Additional options for the upload.
-     * @return string The path to the uploaded image.
+     * @param ProductSection $productSection The product section to update.
+     * @param array $data The validated data for updating the product section.
+     * @return ProductSection The updated product section.
      */
-    private function uploadImage(UploadedFile $image, string $path, array $options = []): string
+    public function update(ProductSection $productSection, array $data): ProductSection
     {
-        return $this->storageService->upload($image, $path, $options);
+        return DB::transaction(function () use ($productSection, $data) {
+            // Handle image
+            if (isset($data['image']) && $data['image'] instanceof UploadedFile) {
+                // Delete old image if exists
+                if ($productSection->image_path) {
+                    $this->storageService->delete($productSection->image_path);
+                }
+
+                $data['image_path'] = $this->uploadImage(
+                    $data['image'],
+                    config('filestorage.paths.product_images')
+                );
+                unset($data['image']);
+            }
+
+            // Update product section
+            $productSection->update($data);
+
+            return $productSection->load(['user']);
+        });
     }
 }

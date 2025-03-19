@@ -53,6 +53,18 @@ class OTPService
     }
 
     /**
+     * Generate a random OTP
+     *
+     * @param int $length
+     * @return string
+     * @throws RandomException
+     */
+    private function generateOTP(int $length = 6): string
+    {
+        return str_pad((string)random_int(0, pow(10, $length) - 1), $length, '0', STR_PAD_LEFT);
+    }
+
+    /**
      * Verify OTP
      *
      * @param User $user
@@ -82,17 +94,5 @@ class OTPService
         $otpRecord->markAsUsed();
 
         return true;
-    }
-
-    /**
-     * Generate a random OTP
-     *
-     * @param int $length
-     * @return string
-     * @throws RandomException
-     */
-    private function generateOTP(int $length = 6): string
-    {
-        return str_pad((string)random_int(0, pow(10, $length) - 1), $length, '0', STR_PAD_LEFT);
     }
 }

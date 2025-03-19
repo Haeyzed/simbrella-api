@@ -35,7 +35,7 @@ class MessageFactory extends Factory
      */
     public function read(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'status' => MessageStatusEnum::READ->value,
         ]);
     }
@@ -45,7 +45,7 @@ class MessageFactory extends Factory
      */
     public function responded(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'response' => $this->faker->paragraph(),
             'status' => MessageStatusEnum::RESPONDED->value,
             'responded_by_id' => User::factory(),
@@ -58,7 +58,7 @@ class MessageFactory extends Factory
      */
     public function archived(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'status' => MessageStatusEnum::ARCHIVED->value,
         ]);
     }

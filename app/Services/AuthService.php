@@ -7,7 +7,7 @@ use App\Models\LoginHistory;
 use App\Models\User;
 use Exception;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Support\Facades\{DB, Hash, Password};
+use Illuminate\Support\Facades\{DB, Hash};
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
 

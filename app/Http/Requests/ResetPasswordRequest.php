@@ -48,7 +48,7 @@ class ResetPasswordRequest extends BaseRequest
                     ->letters()       // Must contain at least one letter
                     ->numbers()       // Must contain at least one number
                     ->symbols()       // Must contain at least one symbol
-                ],
+            ],
 
             /**
              * The token received in the password reset email.

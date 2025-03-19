@@ -28,7 +28,7 @@ class HeroSectionFactory extends Factory
 
     public function published(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'status' => SectionStatusEnum::PUBLISHED->value,
         ]);
     }

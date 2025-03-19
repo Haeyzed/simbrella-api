@@ -1,22 +1,21 @@
 <?php
 
+use App\Http\Controllers\AboutSectionController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BlogPostController;
 use App\Http\Controllers\CareerController;
-use App\Http\Controllers\ContactInformationController;
-use App\Http\Controllers\MessageController;
-use App\Http\Controllers\PermissionController;
-use App\Http\Controllers\RoleController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\AboutSectionController;
 use App\Http\Controllers\CaseStudySectionController;
 use App\Http\Controllers\ClientSectionController;
+use App\Http\Controllers\ContactInformationController;
 use App\Http\Controllers\HeroSectionController;
+use App\Http\Controllers\MessageController;
+use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProductSectionController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ServiceSectionController;
+use App\Http\Controllers\UserController;
 use Dedoc\Scramble\Http\Middleware\RestrictedDocsAccess;
 use Dedoc\Scramble\Scramble;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 // Public Routes (No Authentication Required)

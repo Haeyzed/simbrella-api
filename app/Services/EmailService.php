@@ -19,6 +19,19 @@ use Illuminate\Support\Facades\Mail;
 class EmailService
 {
     /**
+     * Send a message response email.
+     *
+     * @param string $to The recipient email address.
+     * @param string $response The response message.
+     * @return bool Whether the email was sent successfully.
+     */
+    public function sendMessageResponse(string $to, string $response): bool
+    {
+        $mailable = new MessageResponse($response);
+        return $this->send($to, $mailable);
+    }
+
+    /**
      * Send an email.
      *
      * @param string $to The recipient email address.
@@ -47,19 +60,6 @@ class EmailService
             report($e);
             return false;
         }
-    }
-
-    /**
-     * Send a message response email.
-     *
-     * @param string $to The recipient email address.
-     * @param string $response The response message.
-     * @return bool Whether the email was sent successfully.
-     */
-    public function sendMessageResponse(string $to, string $response): bool
-    {
-        $mailable = new MessageResponse($response);
-        return $this->send($to, $mailable);
     }
 
     /**

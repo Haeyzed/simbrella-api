@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Enums\SectionStatusEnum;
-use App\Traits\HasDateFilter;
 use Database\Factories\HeroSectionFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

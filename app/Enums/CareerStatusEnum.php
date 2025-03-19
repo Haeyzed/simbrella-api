@@ -27,7 +27,7 @@ enum CareerStatusEnum: string
      */
     public function label(): string
     {
-        return match($this) {
+        return match ($this) {
             self::DRAFT => 'Draft',
             self::PUBLISHED => 'Published',
             self::OPEN => 'Open',
@@ -43,7 +43,7 @@ enum CareerStatusEnum: string
      */
     public function color(): string
     {
-        return match($this) {
+        return match ($this) {
             self::DRAFT => '#ffc107', // Yellow
             self::PUBLISHED => '#28a745', // Green
             self::OPEN => '#ffc107', // Red

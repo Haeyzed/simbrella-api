@@ -97,6 +97,84 @@ class ServiceSectionService
     }
 
     /**
+     * Upload an image to storage.
+     *
+     * @param UploadedFile $image The image file to upload.
+     * @param string $path The storage path.
+     * @param array $options Additional options for the upload.
+     * @return string The path to the uploaded image.
+     */
+    private function uploadImage(UploadedFile $image, string $path, array $options = []): string
+    {
+        return $this->storageService->upload($image, $path, $options);
+    }
+
+    /**
+     * Permanently delete a service section.
+     *
+     * @param ServiceSection $serviceSection The service section to force delete.
+     * @return bool|null The result of the force delete operation.
+     */
+    public function forceDelete(ServiceSection $serviceSection): ?bool
+    {
+        return DB::transaction(function () use ($serviceSection) {
+            // Delete image if exists
+            if ($serviceSection->image_path) {
+                $this->storageService->delete($serviceSection->image_path);
+            }
+            // Delete icon if exists
+            if ($serviceSection->icon_path) {
+                $this->storageService->delete($serviceSection->icon_path);
+            }
+
+            return $serviceSection->forceDelete();
+        });
+    }
+
+    /**
+     * Delete a service section.
+     *
+     * @param ServiceSection $serviceSection The service section to delete.
+     * @return bool|null The result of the delete operation.
+     */
+    public function delete(ServiceSection $serviceSection): ?bool
+    {
+        return DB::transaction(function () use ($serviceSection) {
+            return $serviceSection->delete();
+        });
+    }
+
+    /**
+     * Restore a soft-deleted service section.
+     *
+     * @param ServiceSection $serviceSection The service section to restore.
+     * @return ServiceSection The restored service section.
+     */
+    public function restore(ServiceSection $serviceSection): ServiceSection
+    {
+        return DB::transaction(function () use ($serviceSection) {
+            $serviceSection->restore();
+            return $serviceSection->load(['user']);
+        });
+    }
+
+    /**
+     * Reorder service sections.
+     *
+     * @param array $orderedIds Array of service section IDs in the desired order.
+     * @return bool Whether the reordering was successful.
+     */
+    public function reorder(array $orderedIds): bool
+    {
+        return DB::transaction(function () use ($orderedIds) {
+            foreach ($orderedIds as $index => $id) {
+                ServiceSection::query()->where('id', $id)->update(['order' => $index]);
+            }
+            return true;
+        });
+    }
+
+    /**
      * Update an existing service section.
      *
      * @param ServiceSection $serviceSection The service section to update.
@@ -139,83 +217,5 @@ class ServiceSectionService
 
             return $serviceSection->load(['user']);
         });
-    }
-
-    /**
-     * Delete a service section.
-     *
-     * @param ServiceSection $serviceSection The service section to delete.
-     * @return bool|null The result of the delete operation.
-     */
-    public function delete(ServiceSection $serviceSection): ?bool
-    {
-        return DB::transaction(function () use ($serviceSection) {
-            return $serviceSection->delete();
-        });
-    }
-
-    /**
-     * Permanently delete a service section.
-     *
-     * @param ServiceSection $serviceSection The service section to force delete.
-     * @return bool|null The result of the force delete operation.
-     */
-    public function forceDelete(ServiceSection $serviceSection): ?bool
-    {
-        return DB::transaction(function () use ($serviceSection) {
-            // Delete image if exists
-            if ($serviceSection->image_path) {
-                $this->storageService->delete($serviceSection->image_path);
-            }
-            // Delete icon if exists
-            if ($serviceSection->icon_path) {
-                $this->storageService->delete($serviceSection->icon_path);
-            }
-
-            return $serviceSection->forceDelete();
-        });
-    }
-
-    /**
-     * Restore a soft-deleted service section.
-     *
-     * @param ServiceSection $serviceSection The service section to restore.
-     * @return ServiceSection The restored service section.
-     */
-    public function restore(ServiceSection $serviceSection): ServiceSection
-    {
-        return DB::transaction(function () use ($serviceSection) {
-            $serviceSection->restore();
-            return $serviceSection->load(['user']);
-        });
-    }
-
-    /**
-     * Reorder service sections.
-     *
-     * @param array $orderedIds Array of service section IDs in the desired order.
-     * @return bool Whether the reordering was successful.
-     */
-    public function reorder(array $orderedIds): bool
-    {
-        return DB::transaction(function () use ($orderedIds) {
-            foreach ($orderedIds as $index => $id) {
-                ServiceSection::query()->where('id', $id)->update(['order' => $index]);
-            }
-            return true;
-        });
-    }
-
-    /**
-     * Upload an image to storage.
-     *
-     * @param UploadedFile $image The image file to upload.
-     * @param string $path The storage path.
-     * @param array $options Additional options for the upload.
-     * @return string The path to the uploaded image.
-     */
-    private function uploadImage(UploadedFile $image, string $path, array $options = []): string
-    {
-        return $this->storageService->upload($image, $path, $options);
     }
 }

@@ -83,6 +83,43 @@ class HeroSectionService
     }
 
     /**
+     * Handle images for a hero section.
+     *
+     * @param HeroSection $heroSection The hero section.
+     * @param array $images The array of image files.
+     * @return void
+     */
+    private function handleImages(HeroSection $heroSection, array $images): void
+    {
+        $order = 0;
+
+        foreach ($images as $image) {
+            if ($image instanceof UploadedFile) {
+                $heroSection->images()->create([
+                    'image_path' => $this->uploadImage(
+                        $image,
+                        config('filestorage.paths.hero_images')
+                    ),
+                    'order' => $order++,
+                ]);
+            }
+        }
+    }
+
+    /**
+     * Upload an image to storage.
+     *
+     * @param UploadedFile $image The image file to upload.
+     * @param string $path The storage path.
+     * @param array $options Additional options for the upload.
+     * @return string The path to the uploaded image.
+     */
+    private function uploadImage(UploadedFile $image, string $path, array $options = []): string
+    {
+        return $this->storageService->upload($image, $path, $options);
+    }
+
+    /**
      * Update an existing hero section.
      *
      * @param HeroSection $heroSection The hero section to update.
@@ -154,42 +191,5 @@ class HeroSectionService
             $heroSection->restore();
             return $heroSection->load(['user', 'images']);
         });
-    }
-
-    /**
-     * Handle images for a hero section.
-     *
-     * @param HeroSection $heroSection The hero section.
-     * @param array $images The array of image files.
-     * @return void
-     */
-    private function handleImages(HeroSection $heroSection, array $images): void
-    {
-        $order = 0;
-
-        foreach ($images as $image) {
-            if ($image instanceof UploadedFile) {
-                $heroSection->images()->create([
-                    'image_path' => $this->uploadImage(
-                        $image,
-                        config('filestorage.paths.hero_images')
-                    ),
-                    'order' => $order++,
-                ]);
-            }
-        }
-    }
-
-    /**
-     * Upload an image to storage.
-     *
-     * @param UploadedFile $image The image file to upload.
-     * @param string $path The storage path.
-     * @param array $options Additional options for the upload.
-     * @return string The path to the uploaded image.
-     */
-    private function uploadImage(UploadedFile $image, string $path, array $options = []): string
-    {
-        return $this->storageService->upload($image, $path, $options);
     }
 }

@@ -55,7 +55,7 @@ class RoleRequest extends BaseRequest
             /**
              * Each permission name in the permissions array.
              *
-             * @var string $permissions.*
+             * @var string $permissions .*
              * @example "manage_users"
              */
             'permissions.*' => ['string', 'exists:permissions,name'],

@@ -10,13 +10,23 @@ enum MessageStatusEnum: string
     case ARCHIVED = 'archived';
 
     /**
+     * Get all enum values.
+     *
+     * @return array
+     */
+    public static function values(): array
+    {
+        return array_column(self::cases(), 'value');
+    }
+
+    /**
      * Get the label for the enum value.
      *
      * @return string
      */
     public function label(): string
     {
-        return match($this) {
+        return match ($this) {
             self::UNREAD => 'Unread',
             self::READ => 'Read',
             self::RESPONDED => 'Responded',
@@ -31,21 +41,11 @@ enum MessageStatusEnum: string
      */
     public function color(): string
     {
-        return match($this) {
+        return match ($this) {
             self::UNREAD => 'red',
             self::READ => 'blue',
             self::RESPONDED => 'green',
             self::ARCHIVED => 'gray',
         };
-    }
-
-    /**
-     * Get all enum values.
-     *
-     * @return array
-     */
-    public static function values(): array
-    {
-        return array_column(self::cases(), 'value');
     }
 }

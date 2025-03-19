@@ -39,7 +39,7 @@ class BlogPostFactory extends Factory
      */
     public function published(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'status' => BlogPostStatusEnum::PUBLISHED->value,
         ]);
     }
@@ -49,7 +49,7 @@ class BlogPostFactory extends Factory
      */
     public function draft(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'status' => BlogPostStatusEnum::DRAFT->value,
         ]);
     }
@@ -59,7 +59,7 @@ class BlogPostFactory extends Factory
      */
     public function archived(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'status' => BlogPostStatusEnum::ARCHIVED->value,
         ]);
     }

@@ -85,6 +85,19 @@ class AboutSectionService
     }
 
     /**
+     * Upload an image to storage.
+     *
+     * @param UploadedFile $image The image file to upload.
+     * @param string $path The storage path.
+     * @param array $options Additional options for the upload.
+     * @return string The path to the uploaded image.
+     */
+    private function uploadImage(UploadedFile $image, string $path, array $options = []): string
+    {
+        return $this->storageService->upload($image, $path, $options);
+    }
+
+    /**
      * Update an existing about section.
      *
      * @param AboutSection $aboutSection The about section to update.
@@ -158,18 +171,5 @@ class AboutSectionService
             $aboutSection->restore();
             return $aboutSection->load(['user']);
         });
-    }
-
-    /**
-     * Upload an image to storage.
-     *
-     * @param UploadedFile $image The image file to upload.
-     * @param string $path The storage path.
-     * @param array $options Additional options for the upload.
-     * @return string The path to the uploaded image.
-     */
-    private function uploadImage(UploadedFile $image, string $path, array $options = []): string
-    {
-        return $this->storageService->upload($image, $path, $options);
     }
 }

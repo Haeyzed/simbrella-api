@@ -3,12 +3,10 @@
 namespace App\Models;
 
 use App\Services\Storage\StorageService;
-use App\Traits\HasDateFilter;
 use Database\Factories\HeroImageFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class HeroImage extends Model
 {

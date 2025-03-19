@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ListCareerRequest;
 use App\Http\Requests\CareerRequest;
+use App\Http\Requests\ListCareerRequest;
 use App\Http\Resources\CareerResource;
 use App\Models\Career;
 use App\Services\ACLService;

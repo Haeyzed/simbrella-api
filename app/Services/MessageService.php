@@ -95,6 +95,23 @@ class MessageService
     }
 
     /**
+     * Notify the organization about a new message.
+     *
+     * @param Message $message The new message.
+     * @return void Whether the notification was sent successfully.
+     */
+    private function notifyOrganization(Message $message): void
+    {
+        $organizationEmail = config('mail.organization_email');
+
+        if (!$organizationEmail) {
+            return;
+        }
+
+        $this->emailService->sendOrganizationNotification($organizationEmail, $message);
+    }
+
+    /**
      * Respond to a message.
      *
      * @param Message $message The message to respond to.
@@ -198,22 +215,5 @@ class MessageService
             $message->restore();
             return $message->refresh();
         });
-    }
-
-    /**
-     * Notify the organization about a new message.
-     *
-     * @param Message $message The new message.
-     * @return void Whether the notification was sent successfully.
-     */
-    private function notifyOrganization(Message $message): void
-    {
-        $organizationEmail = config('mail.organization_email');
-
-        if (!$organizationEmail) {
-            return;
-        }
-
-        $this->emailService->sendOrganizationNotification($organizationEmail, $message);
     }
 }

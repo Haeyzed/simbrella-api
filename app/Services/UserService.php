@@ -112,6 +112,21 @@ class UserService
     }
 
     /**
+     * Upload a profile image.
+     *
+     * @param UploadedFile $image The image file to upload.
+     * @return string The path to the uploaded image.
+     */
+    private function uploadProfileImage(UploadedFile $image): string
+    {
+        return $this->storageService->upload(
+            $image,
+            config('filestorage.paths.user_profiles', 'users'),
+            ['resize' => [300, 300]]
+        );
+    }
+
+    /**
      * Prepare user data for creation or update.
      *
      * @param array $data The input data.
@@ -138,56 +153,6 @@ class UserService
     }
 
     /**
-     * Update an existing user.
-     *
-     * @param User $user The user to update.
-     * @param array $data The validated data for updating the user.
-     * @return User The updated user.
-     */
-    public function update(User $user, array $data): User
-    {
-        return DB::transaction(function () use ($user, $data) {
-            // Handle profile image
-            if (isset($data['profile_image']) && $data['profile_image'] instanceof UploadedFile) {
-                // Delete old profile image if exists
-                if ($user->profile_image) {
-                    $this->storageService->delete($user->profile_image);
-                }
-
-                $data['profile_image'] = $this->uploadProfileImage($data['profile_image']);
-            }
-
-            // Update user data
-            $user->update($this->prepareUserData($data, $user));
-
-            // Handle roles if provided
-            if (isset($data['roles']) && is_array($data['roles'])) {
-                $user->syncRoles($data['roles']);
-            }
-
-            // Handle permissions if provided
-            if (isset($data['permissions']) && is_array($data['permissions'])) {
-                $user->syncPermissions($data['permissions']);
-            }
-
-            return $user->load(['roles', 'permissions']);
-        });
-    }
-
-    /**
-     * Delete a user.
-     *
-     * @param User $user The user to delete.
-     * @return bool|null The result of the delete operation.
-     */
-    public function delete(User $user): ?bool
-    {
-        return DB::transaction(function () use ($user) {
-            return $user->delete();
-        });
-    }
-
-    /**
      * Force delete a user.
      *
      * @param User $user The user to force delete.
@@ -206,6 +171,19 @@ class UserService
             $user->permissions()->detach();
 
             return $user->forceDelete();
+        });
+    }
+
+    /**
+     * Delete a user.
+     *
+     * @param User $user The user to delete.
+     * @return bool|null The result of the delete operation.
+     */
+    public function delete(User $user): ?bool
+    {
+        return DB::transaction(function () use ($user) {
+            return $user->delete();
         });
     }
 
@@ -334,6 +312,43 @@ class UserService
     }
 
     /**
+     * Update an existing user.
+     *
+     * @param User $user The user to update.
+     * @param array $data The validated data for updating the user.
+     * @return User The updated user.
+     */
+    public function update(User $user, array $data): User
+    {
+        return DB::transaction(function () use ($user, $data) {
+            // Handle profile image
+            if (isset($data['profile_image']) && $data['profile_image'] instanceof UploadedFile) {
+                // Delete old profile image if exists
+                if ($user->profile_image) {
+                    $this->storageService->delete($user->profile_image);
+                }
+
+                $data['profile_image'] = $this->uploadProfileImage($data['profile_image']);
+            }
+
+            // Update user data
+            $user->update($this->prepareUserData($data, $user));
+
+            // Handle roles if provided
+            if (isset($data['roles']) && is_array($data['roles'])) {
+                $user->syncRoles($data['roles']);
+            }
+
+            // Handle permissions if provided
+            if (isset($data['permissions']) && is_array($data['permissions'])) {
+                $user->syncPermissions($data['permissions']);
+            }
+
+            return $user->load(['roles', 'permissions']);
+        });
+    }
+
+    /**
      * Change user status.
      *
      * @param User $user The user to change status for.
@@ -347,20 +362,5 @@ class UserService
         ]);
 
         return $user;
-    }
-
-    /**
-     * Upload a profile image.
-     *
-     * @param UploadedFile $image The image file to upload.
-     * @return string The path to the uploaded image.
-     */
-    private function uploadProfileImage(UploadedFile $image): string
-    {
-        return $this->storageService->upload(
-            $image,
-            config('filestorage.paths.user_profiles', 'users'),
-            ['resize' => [300, 300]]
-        );
     }
 }

@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Models\BlogPost;
 use App\Services\Storage\StorageService;
-use Carbon\Carbon;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
@@ -96,6 +95,43 @@ class BlogPostService
     }
 
     /**
+     * Upload an image to storage.
+     *
+     * @param UploadedFile $image The image file to upload.
+     * @param string $path The storage path.
+     * @param array $options Additional options for the upload.
+     * @return string The path to the uploaded image.
+     */
+    private function uploadImage(UploadedFile $image, string $path, array $options = []): string
+    {
+        return $this->storageService->upload($image, $path, $options);
+    }
+
+    /**
+     * Handle related images for a blog post.
+     *
+     * @param BlogPost $blogPost The blog post.
+     * @param array $images The array of image files.
+     * @return void
+     */
+    private function handleRelatedImages(BlogPost $blogPost, array $images): void
+    {
+        $order = $blogPost->images()->count() + 1;
+
+        foreach ($images as $image) {
+            if ($image instanceof UploadedFile) {
+                $blogPost->images()->create([
+                    'image_path' => $this->uploadImage(
+                        $image,
+                        config('filestorage.paths.blog_images')
+                    ),
+                    'order' => $order++,
+                ]);
+            }
+        }
+    }
+
+    /**
      * Update an existing blog post.
      *
      * @param BlogPost $blogPost The blog post to update.
@@ -179,42 +215,5 @@ class BlogPostService
             $blogPost->restore();
             return $blogPost->load(['user', 'images']);
         });
-    }
-
-    /**
-     * Upload an image to storage.
-     *
-     * @param UploadedFile $image The image file to upload.
-     * @param string $path The storage path.
-     * @param array $options Additional options for the upload.
-     * @return string The path to the uploaded image.
-     */
-    private function uploadImage(UploadedFile $image, string $path, array $options = []): string
-    {
-        return $this->storageService->upload($image, $path, $options);
-    }
-
-    /**
-     * Handle related images for a blog post.
-     *
-     * @param BlogPost $blogPost The blog post.
-     * @param array $images The array of image files.
-     * @return void
-     */
-    private function handleRelatedImages(BlogPost $blogPost, array $images): void
-    {
-        $order = $blogPost->images()->count() + 1;
-
-        foreach ($images as $image) {
-            if ($image instanceof UploadedFile) {
-                $blogPost->images()->create([
-                    'image_path' => $this->uploadImage(
-                        $image,
-                        config('filestorage.paths.blog_images')
-                    ),
-                    'order' => $order++,
-                ]);
-            }
-        }
     }
 }

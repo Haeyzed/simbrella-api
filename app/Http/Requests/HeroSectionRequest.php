@@ -58,7 +58,7 @@ class HeroSectionRequest extends BaseRequest
             /**
              * Each image file in the hero section.
              *
-             * @var string $images.*
+             * @var string $images .*
              * @example "hero-banner.jpg"
              */
             'images.*' => ['required', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],

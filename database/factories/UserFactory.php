@@ -49,7 +49,7 @@ class UserFactory extends Factory
      */
     public function unverified(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'email_verified_at' => null,
         ]);
     }
@@ -59,7 +59,7 @@ class UserFactory extends Factory
      */
     public function inactive(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'status' => StatusEnum::INACTIVE->value,
         ]);
     }
@@ -69,7 +69,7 @@ class UserFactory extends Factory
      */
     public function suspended(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'status' => StatusEnum::SUSPENDED->value,
         ]);
     }
@@ -79,7 +79,7 @@ class UserFactory extends Factory
      */
     public function pending(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'status' => StatusEnum::PENDING->value,
         ]);
     }
@@ -89,7 +89,7 @@ class UserFactory extends Factory
      */
     public function withProfileImage(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'profile_image' => 'users/profile-' . Str::random(10) . '.jpg',
         ]);
     }
@@ -99,7 +99,7 @@ class UserFactory extends Factory
      */
     public function withoutBio(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'bio' => null,
         ]);
     }
@@ -109,7 +109,7 @@ class UserFactory extends Factory
      */
     public function withoutAddress(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'country' => null,
             'state' => null,
             'postal_code' => null,

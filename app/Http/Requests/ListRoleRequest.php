@@ -2,9 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Enums\StatusEnum;
-use Illuminate\Validation\Rule;
-
 class ListRoleRequest extends BaseRequest
 {
     /**

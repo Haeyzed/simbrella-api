@@ -25,7 +25,7 @@ enum SectionStatusEnum: string
      */
     public function label(): string
     {
-        return match($this) {
+        return match ($this) {
             self::DRAFT => 'Draft',
             self::PUBLISHED => 'Published',
             self::ARCHIVED => 'Archived',
@@ -39,7 +39,7 @@ enum SectionStatusEnum: string
      */
     public function color(): string
     {
-        return match($this) {
+        return match ($this) {
             self::DRAFT => '#ffc107', // Yellow
             self::PUBLISHED => '#28a745', // Green
             self::ARCHIVED => '#6c757d', // Gray

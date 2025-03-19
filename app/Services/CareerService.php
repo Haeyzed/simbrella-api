@@ -5,7 +5,6 @@ namespace App\Services;
 use App\Enums\CareerStatusEnum;
 use App\Models\Career;
 use App\Services\Storage\StorageService;
-use Carbon\Carbon;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
@@ -107,6 +106,19 @@ class CareerService
     }
 
     /**
+     * Upload an image to storage.
+     *
+     * @param UploadedFile $image The image file to upload.
+     * @param string $path The storage path.
+     * @param array $options Additional options for the upload.
+     * @return string The path to the uploaded image.
+     */
+    private function uploadImage(UploadedFile $image, string $path, array $options = []): string
+    {
+        return $this->storageService->upload($image, $path, $options);
+    }
+
+    /**
      * Update an existing career posting.
      *
      * @param Career $career The career posting to update.
@@ -188,18 +200,5 @@ class CareerService
             $career->restore();
             return $career->load(['user']);
         });
-    }
-
-    /**
-     * Upload an image to storage.
-     *
-     * @param UploadedFile $image The image file to upload.
-     * @param string $path The storage path.
-     * @param array $options Additional options for the upload.
-     * @return string The path to the uploaded image.
-     */
-    private function uploadImage(UploadedFile $image, string $path, array $options = []): string
-    {
-        return $this->storageService->upload($image, $path, $options);
     }
 }

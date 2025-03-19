@@ -91,47 +91,16 @@ class ClientSectionService
     }
 
     /**
-     * Update an existing client section.
+     * Upload an image to storage.
      *
-     * @param ClientSection $clientSection The client section to update.
-     * @param array $data The validated data for updating the client section.
-     * @return ClientSection The updated client section.
+     * @param UploadedFile $image The image file to upload.
+     * @param string $path The storage path.
+     * @param array $options Additional options for the upload.
+     * @return string The path to the uploaded image.
      */
-    public function update(ClientSection $clientSection, array $data): ClientSection
+    private function uploadImage(UploadedFile $image, string $path, array $options = []): string
     {
-        return DB::transaction(function () use ($clientSection, $data) {
-            // Handle logo
-            if (isset($data['logo']) && $data['logo'] instanceof UploadedFile) {
-                // Delete old logo if exists
-                if ($clientSection->logo_path) {
-                    $this->storageService->delete($clientSection->logo_path);
-                }
-
-                $data['logo_path'] = $this->uploadImage(
-                    $data['logo'],
-                    config('filestorage.paths.client_logos')
-                );
-                unset($data['logo']);
-            }
-
-            // Update client section
-            $clientSection->update($data);
-
-            return $clientSection->load(['user', 'caseStudy']);
-        });
-    }
-
-    /**
-     * Delete a client section.
-     *
-     * @param ClientSection $clientSection The client section to delete.
-     * @return bool|null The result of the delete operation.
-     */
-    public function delete(ClientSection $clientSection): ?bool
-    {
-        return DB::transaction(function () use ($clientSection) {
-            return $clientSection->delete();
-        });
+        return $this->storageService->upload($image, $path, $options);
     }
 
     /**
@@ -154,6 +123,19 @@ class ClientSectionService
             }
 
             return $clientSection->forceDelete();
+        });
+    }
+
+    /**
+     * Delete a client section.
+     *
+     * @param ClientSection $clientSection The client section to delete.
+     * @return bool|null The result of the delete operation.
+     */
+    public function delete(ClientSection $clientSection): ?bool
+    {
+        return DB::transaction(function () use ($clientSection) {
+            return $clientSection->delete();
         });
     }
 
@@ -188,15 +170,33 @@ class ClientSectionService
     }
 
     /**
-     * Upload an image to storage.
+     * Update an existing client section.
      *
-     * @param UploadedFile $image The image file to upload.
-     * @param string $path The storage path.
-     * @param array $options Additional options for the upload.
-     * @return string The path to the uploaded image.
+     * @param ClientSection $clientSection The client section to update.
+     * @param array $data The validated data for updating the client section.
+     * @return ClientSection The updated client section.
      */
-    private function uploadImage(UploadedFile $image, string $path, array $options = []): string
+    public function update(ClientSection $clientSection, array $data): ClientSection
     {
-        return $this->storageService->upload($image, $path, $options);
+        return DB::transaction(function () use ($clientSection, $data) {
+            // Handle logo
+            if (isset($data['logo']) && $data['logo'] instanceof UploadedFile) {
+                // Delete old logo if exists
+                if ($clientSection->logo_path) {
+                    $this->storageService->delete($clientSection->logo_path);
+                }
+
+                $data['logo_path'] = $this->uploadImage(
+                    $data['logo'],
+                    config('filestorage.paths.client_logos')
+                );
+                unset($data['logo']);
+            }
+
+            // Update client section
+            $clientSection->update($data);
+
+            return $clientSection->load(['user', 'caseStudy']);
+        });
     }
 }

@@ -56,7 +56,7 @@ class CareerFactory extends Factory
      */
     public function published(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'status' => CareerStatusEnum::PUBLISHED->value,
             'published_at' => $this->faker->dateTimeBetween('-1 month', 'now'),
         ]);
@@ -67,7 +67,7 @@ class CareerFactory extends Factory
      */
     public function draft(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'status' => CareerStatusEnum::DRAFT->value,
             'published_at' => null,
             'expires_at' => null,
@@ -79,7 +79,7 @@ class CareerFactory extends Factory
      */
     public function closed(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'status' => CareerStatusEnum::CLOSED->value,
             'expires_at' => $this->faker->dateTimeBetween('-1 month', 'now'),
         ]);
@@ -90,7 +90,7 @@ class CareerFactory extends Factory
      */
     public function archived(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'status' => CareerStatusEnum::ARCHIVED->value,
         ]);
     }

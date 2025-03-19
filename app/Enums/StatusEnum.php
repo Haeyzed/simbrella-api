@@ -22,7 +22,7 @@ enum StatusEnum: string
      */
     public function label(): string
     {
-        return match($this) {
+        return match ($this) {
             self::ACTIVE => 'Active',
             self::INACTIVE => 'Inactive',
             self::SUSPENDED => 'Suspended',
@@ -35,7 +35,7 @@ enum StatusEnum: string
      */
     public function color(): string
     {
-        return match($this) {
+        return match ($this) {
             self::ACTIVE => 'green',
             self::INACTIVE => 'gray',
             self::SUSPENDED => 'red',

@@ -77,9 +77,9 @@ return [
      * ```
      */
     'servers' => [
-         'Live' => 'api',
-         'Prod' => 'https://scramble.dedoc.co/api',
-     ],
+        'Live' => 'api',
+        'Prod' => 'https://scramble.dedoc.co/api',
+    ],
 
     'middleware' => [
         'web',

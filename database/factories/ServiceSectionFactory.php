@@ -45,7 +45,7 @@ class ServiceSectionFactory extends Factory
      */
     public function published(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'status' => SectionStatusEnum::PUBLISHED->value,
         ]);
     }
@@ -55,7 +55,7 @@ class ServiceSectionFactory extends Factory
      */
     public function draft(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'status' => SectionStatusEnum::DRAFT->value,
         ]);
     }
@@ -65,7 +65,7 @@ class ServiceSectionFactory extends Factory
      */
     public function withImage(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'icon_path' => 'services/service-' . Str::random(10) . '.jpg',
             'image_path' => 'services/service-' . Str::random(10) . '.jpg',
         ]);

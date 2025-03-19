@@ -8,7 +8,6 @@ use App\Models\ContactInformation;
 use App\Services\ACLService;
 use App\Services\ContactInformationService;
 use Exception;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 

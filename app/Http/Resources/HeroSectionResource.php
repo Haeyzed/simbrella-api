@@ -53,7 +53,7 @@ class HeroSectionResource extends JsonResource
              * The status of the hero section.
              *
              * @var string $status
-             * @example "active"
+             * @example "published"
              */
             'status' => $this->status,
 
