@@ -19,7 +19,7 @@ class CloudinaryAdapter implements StorageAdapterInterface
      */
     public function __construct(?string $disk = null)
     {
-        $this->disk = $disk ?? config('filestorage.disks.cloudinary.disk', 'public');
+        $this->disk = $disk ?? config('filestorage.disks.cloudinary.disk', 'cloudinary');
     }
 
     /**
