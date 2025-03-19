@@ -2,12 +2,26 @@
 
 namespace App\Services\Storage;
 
-use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class CloudinaryAdapter implements StorageAdapterInterface
 {
+    /**
+     * @var string
+     */
+    protected string $disk;
+
+    /**
+     * CloudinaryAdapter constructor.
+     *
+     * @param string|null $disk
+     */
+    public function __construct(?string $disk = null)
+    {
+        $this->disk = $disk ?? config('filestorage.disks.cloudinary.disk', 'public');
+    }
+
     /**
      * Upload a file to storage.
      *
@@ -18,20 +32,10 @@ class CloudinaryAdapter implements StorageAdapterInterface
      */
     public function upload(UploadedFile $file, string $path, array $options = []): string
     {
-        $folder = str_replace('/', '_', $path);
-        $uploadOptions = [
-            'folder' => $folder,
-            'public_id' => $options['public_id'] ?? Str::random(20),
-        ];
-
-        if (isset($options['transformation'])) {
-            $uploadOptions['transformation'] = $options['transformation'];
-        }
-
-        $result = Cloudinary::upload($file->getRealPath(), $uploadOptions);
-
-        // Return the public_id which serves as the path
-        return $result->getPublicId();
+        return $file->store($path, [
+            'disk' => $this->disk,
+            ...$options
+        ]);
     }
 
     /**
@@ -42,12 +46,7 @@ class CloudinaryAdapter implements StorageAdapterInterface
      */
     public function delete(string $path): bool
     {
-        try {
-            Cloudinary::destroy($path);
-            return true;
-        } catch (\Exception $e) {
-            return false;
-        }
+        return Storage::disk($this->disk)->delete($path);
     }
 
     /**
@@ -58,7 +57,7 @@ class CloudinaryAdapter implements StorageAdapterInterface
      */
     public function url(string $path): string
     {
-        return Cloudinary::getUrl($path);
+        return Storage::disk($this->disk)->url($path);
     }
 
     /**
@@ -69,13 +68,6 @@ class CloudinaryAdapter implements StorageAdapterInterface
      */
     public function exists(string $path): bool
     {
-        try {
-            // This is a workaround since Cloudinary doesn't have a direct exists method
-            $url = Cloudinary::getUrl($path);
-            $headers = get_headers($url);
-            return (bool)stripos($headers[0], "200 OK");
-        } catch (\Exception $e) {
-            return false;
-        }
+        return Storage::disk($this->disk)->exists($path);
     }
 }

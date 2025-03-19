@@ -46,6 +46,7 @@ return [
             'throw' => false,
             'report' => false,
         ],
+
         'cloudinary' => [
             'driver' => 'cloudinary',
             'key' => env('CLOUDINARY_KEY'),
