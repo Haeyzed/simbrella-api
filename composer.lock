@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "efb70c17636fd2cfc8871bfc163366d1",
+    "content-hash": "f94072560831a783a893ee2d5bbd4bdb",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -62,16 +62,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.342.6",
+            "version": "3.342.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "2ad93ef447289da27892707efa683c1ae7ced85f"
+                "reference": "d8279a481cf87482a1fb74784f76e4160efcce90"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/2ad93ef447289da27892707efa683c1ae7ced85f",
-                "reference": "2ad93ef447289da27892707efa683c1ae7ced85f",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/d8279a481cf87482a1fb74784f76e4160efcce90",
+                "reference": "d8279a481cf87482a1fb74784f76e4160efcce90",
                 "shasum": ""
             },
             "require": {
@@ -153,9 +153,9 @@
             "support": {
                 "forum": "https://github.com/aws/aws-sdk-php/discussions",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.342.6"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.342.8"
             },
-            "time": "2025-03-14T18:01:18+00:00"
+            "time": "2025-03-18T18:15:40+00:00"
         },
         {
             "name": "brick/math",
@@ -288,37 +288,35 @@
         },
         {
             "name": "cloudinary-labs/cloudinary-laravel",
-            "version": "2.3.0",
+            "version": "3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cloudinary-community/cloudinary-laravel.git",
-                "reference": "ed74eec3b2453ae307e2dda7e8c5cf9556f4daa3"
+                "reference": "a803d0c115baba68851a667305f0834cafa7e35a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cloudinary-community/cloudinary-laravel/zipball/ed74eec3b2453ae307e2dda7e8c5cf9556f4daa3",
-                "reference": "ed74eec3b2453ae307e2dda7e8c5cf9556f4daa3",
+                "url": "https://api.github.com/repos/cloudinary-community/cloudinary-laravel/zipball/a803d0c115baba68851a667305f0834cafa7e35a",
+                "reference": "a803d0c115baba68851a667305f0834cafa7e35a",
                 "shasum": ""
             },
             "require": {
-                "cloudinary/cloudinary_php": "^2.0",
+                "cloudinary/cloudinary_php": "^3.0",
                 "ext-json": "*",
-                "illuminate/support": "^10.0|^11.0|^12.0",
-                "php": "^8.1"
+                "illuminate/support": "^11.0|^12.0",
+                "php": "^8.2"
             },
             "require-dev": {
                 "laravel/pint": "^1.20",
-                "mockery/mockery": "^1.1",
+                "mockery/mockery": "^1.6",
                 "orchestra/testbench": "^8.0|^9.0|^10.0",
                 "pestphp/pest": "^2.35|^3.0",
-                "sempro/phpunit-pretty-print": "^1.0"
+                "phpspec/prophecy-phpunit": "^2.3",
+                "sempro/phpunit-pretty-print": "^1.2"
             },
             "type": "library",
             "extra": {
                 "laravel": {
-                    "aliases": {
-                        "Cloudinary": "CloudinaryLabs\\CloudinaryLaravel\\Facades\\Cloudinary"
-                    },
                     "providers": [
                         "CloudinaryLabs\\CloudinaryLaravel\\CloudinaryServiceProvider"
                     ]
@@ -326,7 +324,7 @@
             },
             "autoload": {
                 "files": [
-                    "src/Support/helpers.php"
+                    "src/helpers.php"
                 ],
                 "psr-4": {
                     "CloudinaryLabs\\CloudinaryLaravel\\": "src/"
@@ -338,9 +336,8 @@
             ],
             "authors": [
                 {
-                    "name": "Prosper Otemuyiwa",
-                    "email": "prosperotemuyiwa@gmail.com",
-                    "homepage": "https://github.com/unicodeveloper"
+                    "name": "Josh Manders",
+                    "homepage": "https://github.com/joshmanders"
                 }
             ],
             "description": "A Laravel Cloudinary Package",
@@ -355,43 +352,42 @@
             ],
             "support": {
                 "issues": "https://github.com/cloudinary-community/cloudinary-laravel/issues",
-                "source": "https://github.com/cloudinary-community/cloudinary-laravel/tree/2.3.0"
+                "source": "https://github.com/cloudinary-community/cloudinary-laravel/tree/3.0.0"
             },
-            "time": "2025-03-06T20:51:20+00:00"
+            "time": "2025-03-16T19:19:14+00:00"
         },
         {
             "name": "cloudinary/cloudinary_php",
-            "version": "2.14.0",
+            "version": "3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cloudinary/cloudinary_php.git",
-                "reference": "5967558bbf5d88e851ebd554559e850ac45b9236"
+                "reference": "f87f0635aa6fc950b1cd99257ac04342914cec6c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cloudinary/cloudinary_php/zipball/5967558bbf5d88e851ebd554559e850ac45b9236",
-                "reference": "5967558bbf5d88e851ebd554559e850ac45b9236",
+                "url": "https://api.github.com/repos/cloudinary/cloudinary_php/zipball/f87f0635aa6fc950b1cd99257ac04342914cec6c",
+                "reference": "f87f0635aa6fc950b1cd99257ac04342914cec6c",
                 "shasum": ""
             },
             "require": {
-                "cloudinary/transformation-builder-sdk": "^1",
+                "cloudinary/transformation-builder-sdk": "^2",
                 "ext-json": "*",
-                "guzzlehttp/guzzle": "^6.5.8|^7.4.5",
+                "guzzlehttp/guzzle": "^7.4.5",
                 "guzzlehttp/promises": "^1.5.3|^2.0",
-                "guzzlehttp/psr7": "^1.9.1|^2.5",
-                "monolog/monolog": "^1|^2|^3",
-                "php": ">=5.6.0",
-                "psr/log": "^1|^2|^3"
+                "guzzlehttp/psr7": "^2.7",
+                "monolog/monolog": "^2|^3",
+                "php": ">=8.0.0",
+                "psr/log": "^2|^3"
             },
             "require-dev": {
-                "consolidation/robo": "~1",
                 "ext-dom": "*",
                 "ext-libxml": "*",
                 "ext-zip": "*",
                 "friendsofphp/php-cs-fixer": "*",
                 "phpmd/phpmd": "*",
-                "squizlabs/php_codesniffer": "3.*",
-                "symfony/phpunit-bridge": "^5.2"
+                "squizlabs/php_codesniffer": "*",
+                "symfony/phpunit-bridge": "^7.2"
             },
             "type": "library",
             "autoload": {
@@ -421,37 +417,36 @@
             "support": {
                 "email": "info@cloudinary.com",
                 "issues": "https://github.com/cloudinary/cloudinary_php/issues",
-                "source": "https://github.com/cloudinary/cloudinary_php/tree/2.14.0"
+                "source": "https://github.com/cloudinary/cloudinary_php/tree/3.1.0"
             },
-            "time": "2024-05-07T15:14:12+00:00"
+            "time": "2025-01-14T23:17:05+00:00"
         },
         {
             "name": "cloudinary/transformation-builder-sdk",
-            "version": "1.5.0",
+            "version": "2.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cloudinary/php-transformation-builder-sdk.git",
-                "reference": "8c225472e96291a7af23ddf8947bdf31baac403e"
+                "reference": "6ff4a84f14dbc5197563db63b6abbbe77a68d7e7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cloudinary/php-transformation-builder-sdk/zipball/8c225472e96291a7af23ddf8947bdf31baac403e",
-                "reference": "8c225472e96291a7af23ddf8947bdf31baac403e",
+                "url": "https://api.github.com/repos/cloudinary/php-transformation-builder-sdk/zipball/6ff4a84f14dbc5197563db63b6abbbe77a68d7e7",
+                "reference": "6ff4a84f14dbc5197563db63b6abbbe77a68d7e7",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "php": ">=5.6.0"
+                "php": ">=8.0.0"
             },
             "require-dev": {
-                "consolidation/robo": "~1",
                 "ext-dom": "*",
                 "ext-libxml": "*",
                 "ext-zip": "*",
                 "friendsofphp/php-cs-fixer": "*",
                 "phpmd/phpmd": "*",
-                "squizlabs/php_codesniffer": "3.*",
-                "symfony/phpunit-bridge": "^5.2"
+                "squizlabs/php_codesniffer": "*",
+                "symfony/phpunit-bridge": "^7.2"
             },
             "type": "library",
             "autoload": {
@@ -481,22 +476,22 @@
             "support": {
                 "email": "info@cloudinary.com",
                 "issues": "https://github.com/cloudinary/php-transformation-builder-sdk/issues",
-                "source": "https://github.com/cloudinary/php-transformation-builder-sdk/tree/1.5.0"
+                "source": "https://github.com/cloudinary/php-transformation-builder-sdk/tree/2.1.2"
             },
-            "time": "2024-05-27T12:26:00+00:00"
+            "time": "2025-02-03T11:14:03+00:00"
         },
         {
             "name": "dedoc/scramble",
-            "version": "v0.12.11",
+            "version": "v0.12.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dedoc/scramble.git",
-                "reference": "83aacb9d81ed147ac086f42967de288a3415c5d6"
+                "reference": "520484a8e7409364f3c66ae7493403a5d1ceac24"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dedoc/scramble/zipball/83aacb9d81ed147ac086f42967de288a3415c5d6",
-                "reference": "83aacb9d81ed147ac086f42967de288a3415c5d6",
+                "url": "https://api.github.com/repos/dedoc/scramble/zipball/520484a8e7409364f3c66ae7493403a5d1ceac24",
+                "reference": "520484a8e7409364f3c66ae7493403a5d1ceac24",
                 "shasum": ""
             },
             "require": {
@@ -551,7 +546,7 @@
             ],
             "support": {
                 "issues": "https://github.com/dedoc/scramble/issues",
-                "source": "https://github.com/dedoc/scramble/tree/v0.12.11"
+                "source": "https://github.com/dedoc/scramble/tree/v0.12.13"
             },
             "funding": [
                 {
@@ -559,7 +554,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-03-09T10:32:56+00:00"
+            "time": "2025-03-18T06:42:24+00:00"
         },
         {
             "name": "dflydev/dot-access-data",
@@ -1547,16 +1542,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v12.2.0",
+            "version": "v12.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "2fb06941bc69ea92f28b2888535ab144ee006889"
+                "reference": "ca0412e978f78ecea0cafbe34dd8b18010064f73"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/2fb06941bc69ea92f28b2888535ab144ee006889",
-                "reference": "2fb06941bc69ea92f28b2888535ab144ee006889",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/ca0412e978f78ecea0cafbe34dd8b18010064f73",
+                "reference": "ca0412e978f78ecea0cafbe34dd8b18010064f73",
                 "shasum": ""
             },
             "require": {
@@ -1758,7 +1753,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2025-03-12T14:38:20+00:00"
+            "time": "2025-03-18T13:49:19+00:00"
         },
         {
             "name": "laravel/prompts",
@@ -1946,16 +1941,16 @@
         },
         {
             "name": "laravel/telescope",
-            "version": "v5.5.1",
+            "version": "v5.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/telescope.git",
-                "reference": "4937ee4c7243fae39fdb3e990a18af2546c2ed3b"
+                "reference": "352dc633c2fe500c169e3401a10a7efae4fc3327"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/telescope/zipball/4937ee4c7243fae39fdb3e990a18af2546c2ed3b",
-                "reference": "4937ee4c7243fae39fdb3e990a18af2546c2ed3b",
+                "url": "https://api.github.com/repos/laravel/telescope/zipball/352dc633c2fe500c169e3401a10a7efae4fc3327",
+                "reference": "352dc633c2fe500c169e3401a10a7efae4fc3327",
                 "shasum": ""
             },
             "require": {
@@ -2009,9 +2004,9 @@
             ],
             "support": {
                 "issues": "https://github.com/laravel/telescope/issues",
-                "source": "https://github.com/laravel/telescope/tree/v5.5.1"
+                "source": "https://github.com/laravel/telescope/tree/v5.6.0"
             },
-            "time": "2025-03-10T17:13:23+00:00"
+            "time": "2025-03-17T20:24:10+00:00"
         },
         {
             "name": "laravel/tinker",
@@ -4169,16 +4164,16 @@
         },
         {
             "name": "psy/psysh",
-            "version": "v0.12.7",
+            "version": "v0.12.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bobthecow/psysh.git",
-                "reference": "d73fa3c74918ef4522bb8a3bf9cab39161c4b57c"
+                "reference": "85057ceedee50c49d4f6ecaff73ee96adb3b3625"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/d73fa3c74918ef4522bb8a3bf9cab39161c4b57c",
-                "reference": "d73fa3c74918ef4522bb8a3bf9cab39161c4b57c",
+                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/85057ceedee50c49d4f6ecaff73ee96adb3b3625",
+                "reference": "85057ceedee50c49d4f6ecaff73ee96adb3b3625",
                 "shasum": ""
             },
             "require": {
@@ -4242,9 +4237,9 @@
             ],
             "support": {
                 "issues": "https://github.com/bobthecow/psysh/issues",
-                "source": "https://github.com/bobthecow/psysh/tree/v0.12.7"
+                "source": "https://github.com/bobthecow/psysh/tree/v0.12.8"
             },
-            "time": "2024-12-10T01:58:33+00:00"
+            "time": "2025-03-16T03:05:19+00:00"
         },
         {
             "name": "ralouphie/getallheaders",
@@ -8026,16 +8021,16 @@
         },
         {
             "name": "filp/whoops",
-            "version": "2.17.0",
+            "version": "2.18.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filp/whoops.git",
-                "reference": "075bc0c26631110584175de6523ab3f1652eb28e"
+                "reference": "a7de6c3c6c3c022f5cfc337f8ede6a14460cf77e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/filp/whoops/zipball/075bc0c26631110584175de6523ab3f1652eb28e",
-                "reference": "075bc0c26631110584175de6523ab3f1652eb28e",
+                "url": "https://api.github.com/repos/filp/whoops/zipball/a7de6c3c6c3c022f5cfc337f8ede6a14460cf77e",
+                "reference": "a7de6c3c6c3c022f5cfc337f8ede6a14460cf77e",
                 "shasum": ""
             },
             "require": {
@@ -8085,7 +8080,7 @@
             ],
             "support": {
                 "issues": "https://github.com/filp/whoops/issues",
-                "source": "https://github.com/filp/whoops/tree/2.17.0"
+                "source": "https://github.com/filp/whoops/tree/2.18.0"
             },
             "funding": [
                 {
@@ -8093,7 +8088,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-01-25T12:00:00+00:00"
+            "time": "2025-03-15T12:00:00+00:00"
         },
         {
             "name": "hamcrest/hamcrest-php",
@@ -9767,16 +9762,16 @@
         },
         {
             "name": "sebastian/code-unit",
-            "version": "3.0.2",
+            "version": "3.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/code-unit.git",
-                "reference": "ee88b0cdbe74cf8dd3b54940ff17643c0d6543ca"
+                "reference": "54391c61e4af8078e5b276ab082b6d3c54c9ad64"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/code-unit/zipball/ee88b0cdbe74cf8dd3b54940ff17643c0d6543ca",
-                "reference": "ee88b0cdbe74cf8dd3b54940ff17643c0d6543ca",
+                "url": "https://api.github.com/repos/sebastianbergmann/code-unit/zipball/54391c61e4af8078e5b276ab082b6d3c54c9ad64",
+                "reference": "54391c61e4af8078e5b276ab082b6d3c54c9ad64",
                 "shasum": ""
             },
             "require": {
@@ -9812,7 +9807,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/code-unit/issues",
                 "security": "https://github.com/sebastianbergmann/code-unit/security/policy",
-                "source": "https://github.com/sebastianbergmann/code-unit/tree/3.0.2"
+                "source": "https://github.com/sebastianbergmann/code-unit/tree/3.0.3"
             },
             "funding": [
                 {
@@ -9820,7 +9815,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-12-12T09:59:06+00:00"
+            "time": "2025-03-19T07:56:08+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
@@ -10525,16 +10520,16 @@
         },
         {
             "name": "sebastian/type",
-            "version": "5.1.0",
+            "version": "5.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/type.git",
-                "reference": "461b9c5da241511a2a0e8f240814fb23ce5c0aac"
+                "reference": "a8a7e30534b0eb0c77cd9d07e82de1a114389f5e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/type/zipball/461b9c5da241511a2a0e8f240814fb23ce5c0aac",
-                "reference": "461b9c5da241511a2a0e8f240814fb23ce5c0aac",
+                "url": "https://api.github.com/repos/sebastianbergmann/type/zipball/a8a7e30534b0eb0c77cd9d07e82de1a114389f5e",
+                "reference": "a8a7e30534b0eb0c77cd9d07e82de1a114389f5e",
                 "shasum": ""
             },
             "require": {
@@ -10570,7 +10565,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/type/issues",
                 "security": "https://github.com/sebastianbergmann/type/security/policy",
-                "source": "https://github.com/sebastianbergmann/type/tree/5.1.0"
+                "source": "https://github.com/sebastianbergmann/type/tree/5.1.2"
             },
             "funding": [
                 {
@@ -10578,7 +10573,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-09-17T13:12:04+00:00"
+            "time": "2025-03-18T13:35:50+00:00"
         },
         {
             "name": "sebastian/version",

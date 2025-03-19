@@ -92,7 +92,7 @@ class BlogPostRequest extends BaseRequest
              * @var string|null $related_images .*
              * @example "image1.jpg"
              */
-            'related_images.*' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif', 'max:500'],
+            'related_images.*' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
         ];
     }
 
