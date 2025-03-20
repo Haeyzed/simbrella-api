@@ -19,6 +19,8 @@ class DatabaseSeeder extends Seeder
             HomePageManagementSeeder::class,
             ContactInformationSeeder::class,
             MessageSeeder::class,
+            PageSeeder::class,
+            PageImageSeeder::class,
         ]);
 //        User::factory()->create([
 //            'name' => 'Muibi Azeez Abolade',
