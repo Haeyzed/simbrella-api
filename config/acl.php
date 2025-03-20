@@ -292,6 +292,76 @@ return [
             'description' => 'Can restore deleted contact messages',
             'is_system' => true,
         ],
+
+        // Page permissions
+        'page_view' => [
+            'name' => 'page_view',
+            'display_name' => 'View Pages',
+            'description' => 'Can view pages',
+            'is_system' => true,
+        ],
+        'page_create' => [
+            'name' => 'page_create',
+            'display_name' => 'Create Pages',
+            'description' => 'Can create new pages',
+            'is_system' => true,
+        ],
+        'page_update' => [
+            'name' => 'page_update',
+            'display_name' => 'Update Pages',
+            'description' => 'Can update existing pages',
+            'is_system' => true,
+        ],
+        'page_delete' => [
+            'name' => 'page_delete',
+            'display_name' => 'Delete Pages',
+            'description' => 'Can delete pages',
+            'is_system' => true,
+        ],
+        'page_restore' => [
+            'name' => 'page_restore',
+            'display_name' => 'Restore Pages',
+            'description' => 'Can restore deleted pages',
+            'is_system' => true,
+        ],
+        'page_publish' => [
+            'name' => 'page_publish',
+            'display_name' => 'Publish Pages',
+            'description' => 'Can publish or unpublish pages',
+            'is_system' => true,
+        ],
+
+        // Page Image permissions
+        'page_image_view' => [
+            'name' => 'page_image_view',
+            'display_name' => 'View Page Images',
+            'description' => 'Can view page images',
+            'is_system' => true,
+        ],
+        'page_image_create' => [
+            'name' => 'page_image_create',
+            'display_name' => 'Create Page Images',
+            'description' => 'Can upload new page images',
+            'is_system' => true,
+        ],
+        'page_image_update' => [
+            'name' => 'page_image_update',
+            'display_name' => 'Update Page Images',
+            'description' => 'Can update existing page images',
+            'is_system' => true,
+        ],
+        'page_image_delete' => [
+            'name' => 'page_image_delete',
+            'display_name' => 'Delete Page Images',
+            'description' => 'Can delete page images',
+            'is_system' => true,
+        ],
+        'page_image_restore' => [
+            'name' => 'page_image_restore',
+            'display_name' => 'Restore Page Images',
+            'description' => 'Can restore deleted page images',
+            'is_system' => true,
+        ],
     ],
     'reserved_permissions' => [
         'user_view',
@@ -325,5 +395,16 @@ return [
         'message_archive',
         'message_delete',
         'message_restore',
+        'page_view',
+        'page_create',
+        'page_update',
+        'page_delete',
+        'page_restore',
+        'page_publish',
+        'page_image_view',
+        'page_image_create',
+        'page_image_update',
+        'page_image_delete',
+        'page_image_restore',
     ],
 ];

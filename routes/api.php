@@ -9,6 +9,8 @@ use App\Http\Controllers\ClientSectionController;
 use App\Http\Controllers\ContactInformationController;
 use App\Http\Controllers\HeroSectionController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\PageImageController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProductSectionController;
 use App\Http\Controllers\RoleController;
@@ -51,6 +53,16 @@ Route::prefix('public')->name('public.')->group(function () {
     Route::get('blog-posts', [BlogPostController::class, 'index'])->name('blog-posts.index');
     Route::get('blog-posts/{blogPost}', [BlogPostController::class, 'show'])->name('blog-posts.show');
 
+    // Pages
+    Route::get('pages', [PageController::class, 'index'])->name('pages.index');
+    Route::get('pages/{page}', [PageController::class, 'show'])->name('pages.show');
+    Route::get('pages/slug/{slug}', [PageController::class, 'showBySlug'])->name('pages.show-by-slug');
+
+    // Page Images
+    Route::get('page-images', [PageImageController::class, 'index'])->name('page-images.index');
+    Route::get('page-images/{pageImage}', [PageImageController::class, 'show'])->name('page-images.show');
+    Route::get('page-images/type/{type}', [PageImageController::class, 'getByType'])->name('page-images.by-type');
+
     // Messages
     Route::post('messages', [MessageController::class, 'store'])->name('messages.store');
 });
@@ -88,6 +100,36 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:api'])->group(function
         Route::post('/{blogPost}/restore', [BlogPostController::class, 'restore'])
             ->name('restore')
             ->withTrashed();
+    });
+
+    // Pages
+    Route::apiResource('pages', PageController::class);
+    Route::prefix('pages')->name('pages.')->group(function () {
+        // Soft delete management
+        Route::delete('/{page}/force', [PageController::class, 'forceDestroy'])
+            ->name('force-destroy')
+            ->withTrashed();
+        Route::post('/{page}/restore', [PageController::class, 'restore'])
+            ->name('restore')
+            ->withTrashed();
+        Route::post('/{page}/toggle-published', [PageController::class, 'togglePublished'])
+            ->name('toggle-published');
+        Route::get('/slug/{slug}', [PageController::class, 'showBySlug'])
+            ->name('show-by-slug');
+    });
+
+    // Page Images
+    Route::apiResource('page-images', PageImageController::class);
+    Route::prefix('page-images')->name('page-images.')->group(function () {
+        // Soft delete management
+        Route::delete('/{pageImage}/force', [PageImageController::class, 'forceDestroy'])
+            ->name('force-destroy')
+            ->withTrashed();
+        Route::post('/{pageImage}/restore', [PageImageController::class, 'restore'])
+            ->name('restore')
+            ->withTrashed();
+        Route::get('/type/{type}', [PageImageController::class, 'getByType'])
+            ->name('by-type');
     });
 
     // User Routes
