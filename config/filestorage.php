@@ -53,6 +53,7 @@ return [
     */
     'paths' => [
         'about_images' => config('app.name').'/'.env('FILESTORAGE_ABOUT_IMAGES_PATH', config('app.name').'/about/images'),
+        'page_images' => config('app.name').'/'.env('FILESTORAGE_PAGE_IMAGES_PATH', config('app.name').'/page/images'),
         'blog_banners' => config('app.name').'/'.env('FILESTORAGE_BLOG_BANNERS_PATH', config('app.name').'/blog/banners'),
         'career_banners' => config('app.name').'/'.env('FILESTORAGE_CAREER_BANNERS_PATH', config('app.name').'/career/banners'),
         'blog_images' => config('app.name').'/'.env('FILESTORAGE_BLOG_IMAGES_PATH', config('app.name').'/blog/images'),
