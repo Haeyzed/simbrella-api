@@ -61,10 +61,14 @@ class ClientSection extends Model
     /**
      * Get the URL of the client's logo.
      *
-     * @return string
+     * @return string|null
      */
-    public function getLogoUrlAttribute(): string
+    public function getLogoUrlAttribute():  ?string
     {
+        if (!$this->logo_path) {
+            return null;
+        }
+
         return app(StorageService::class)->url($this->logo_path);
     }
 }
