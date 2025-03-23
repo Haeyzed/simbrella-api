@@ -22,7 +22,7 @@ use Dedoc\Scramble\Scramble;
 use Illuminate\Support\Facades\Route;
 
 // Public Routes (No Authentication Required)
-Route::prefix('public')->middleware(['track_visitor'])->name('public.')->group(function () {
+Route::prefix('public')->name('public.')->group(function () {
     // Hero Sections
     Route::get('hero-sections', [HeroSectionController::class, 'index'])->name('hero-sections.index');
     Route::get('hero-sections/{heroSection}', [HeroSectionController::class, 'show'])->name('hero-sections.show');
@@ -90,7 +90,7 @@ Route::prefix('auth')->group(function () {
 });
 
 // Admin Routes (Authentication Required)
-Route::prefix('admin')->name('admin.')->middleware(['auth:api','track_visitor'])->group(function () {
+Route::prefix('admin')->name('admin.')->middleware(['auth:api'])->group(function () {
     // Blog Posts
     Route::apiResource('blog-posts', BlogPostController::class);
     Route::prefix('blog-posts')->name('blog-posts.')->group(function () {
