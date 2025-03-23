@@ -13,6 +13,7 @@
         "aws/aws-sdk-php": "^3.342",
         "cloudinary-labs/cloudinary-laravel": "^3.0",
         "dedoc/scramble": "^0.12.10",
+        "jenssegers/agent": "^2.6",
         "laravel/framework": "^12.0",
         "laravel/sanctum": "^4.0",
         "laravel/telescope": "^5.5",

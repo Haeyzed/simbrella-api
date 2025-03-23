@@ -362,6 +362,18 @@ return [
             'description' => 'Can restore deleted page images',
             'is_system' => true,
         ],
+        'dashboard_view' => [
+            'name' => 'dashboard_view',
+            'display_name' => 'View Dashboard',
+            'description' => 'Can view the admin dashboard',
+            'is_system' => true,
+        ],
+        'dashboard_stats' => [
+            'name' => 'dashboard_stats',
+            'display_name' => 'View Dashboard Statistics',
+            'description' => 'Can view detailed dashboard statistics',
+            'is_system' => true,
+        ],
     ],
     'reserved_permissions' => [
         'user_view',

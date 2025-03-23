@@ -7,6 +7,7 @@ use App\Http\Controllers\CareerController;
 use App\Http\Controllers\CaseStudySectionController;
 use App\Http\Controllers\ClientSectionController;
 use App\Http\Controllers\ContactInformationController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HeroSectionController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PageController;
@@ -21,7 +22,7 @@ use Dedoc\Scramble\Scramble;
 use Illuminate\Support\Facades\Route;
 
 // Public Routes (No Authentication Required)
-Route::prefix('public')->name('public.')->group(function () {
+Route::prefix('public')->middleware(['track_visitor'])->name('public.')->group(function () {
     // Hero Sections
     Route::get('hero-sections', [HeroSectionController::class, 'index'])->name('hero-sections.index');
     Route::get('hero-sections/{heroSection}', [HeroSectionController::class, 'show'])->name('hero-sections.show');
@@ -89,7 +90,7 @@ Route::prefix('auth')->group(function () {
 });
 
 // Admin Routes (Authentication Required)
-Route::prefix('admin')->name('admin.')->middleware(['auth:api'])->group(function () {
+Route::prefix('admin')->name('admin.')->middleware(['auth:api','track_visitor'])->group(function () {
     // Blog Posts
     Route::apiResource('blog-posts', BlogPostController::class);
     Route::prefix('blog-posts')->name('blog-posts.')->group(function () {
@@ -300,6 +301,15 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:api'])->group(function
         Route::delete('/{message}', [MessageController::class, 'destroy'])->name('destroy');
         Route::delete('/{message}/force', [MessageController::class, 'forceDestroy'])->name('force-destroy');
         Route::patch('/{message}/restore', [MessageController::class, 'restore'])->name('restore');
+    });
+
+    // Dashboard Routes
+    Route::prefix('dashboard')->name('dashboard.')->group(function () {
+        Route::get('/', [DashboardController::class, 'index'])->name('index');
+        Route::get('/stats/{type}', [DashboardController::class, 'getDetailedStats'])->name('detailed-stats');
+        Route::get('/visitors', [DashboardController::class, 'getVisitorStats'])->name('visitors');
+        Route::get('/top-blogs', [DashboardController::class, 'getTopBlogPosts'])->name('top-blogs');
+        Route::get('/recent-activity', [DashboardController::class, 'getRecentActivity'])->name('recent-activity');
     });
 });
 

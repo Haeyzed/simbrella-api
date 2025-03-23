@@ -262,15 +262,7 @@ class UserService
      */
     public function givePermissionToUser(User $user, array $permissions): User
     {
-        // Get current direct permissions
-        $currentPermissions = $user->getDirectPermissions()->pluck('name')->toArray();
-
-        // Merge with new permissions
-        $allPermissions = array_unique(array_merge($currentPermissions, $permissions));
-
-        // Sync permissions
-        $user->syncPermissions($allPermissions);
-
+        $user->givePermissionTo($permissions);
         return $user->load(['roles', 'permissions']);
     }
 
@@ -283,15 +275,7 @@ class UserService
      */
     public function revokePermissionFromUser(User $user, array $permissions): User
     {
-        // Get current direct permissions
-        $currentPermissions = $user->getDirectPermissions()->pluck('name')->toArray();
-
-        // Remove permissions to revoke
-        $remainingPermissions = array_diff($currentPermissions, $permissions);
-
-        // Sync remaining permissions
-        $user->syncPermissions($remainingPermissions);
-
+        $user->revokePermissionTo($permissions);
         return $user->load(['roles', 'permissions']);
     }
 
