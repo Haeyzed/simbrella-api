@@ -57,49 +57,68 @@ class DashboardService
     {
         $now = Carbon::now();
         $startDate = null;
-        $groupBy = '';
-        $dateFormat = '';
 
         switch ($period) {
             case 'daily':
                 $startDate = $now->copy()->subDays(6)->startOfDay();
-                $groupBy = 'day_name';
-                $dateFormat = 'l'; // Day name (Monday, Tuesday, etc.)
                 break;
             case 'weekly':
                 $startDate = $now->copy()->subWeeks(4)->startOfWeek();
-                $groupBy = 'week';
-                $dateFormat = 'W'; // Week number
                 break;
             case 'monthly':
                 $startDate = $now->copy()->subMonths(6)->startOfMonth();
-                $groupBy = 'month';
-                $dateFormat = 'F'; // Month name
                 break;
         }
 
-        // Get visitor counts by day/week/month
-        $visitorsByPeriod = Visitor::query()->where('created_at', '>=', $startDate)
-            ->select(
-                DB::raw("DATE_FORMAT(created_at, '{$dateFormat}') as {$groupBy}"),
-                DB::raw('COUNT(*) as count')
-            )
-            ->groupBy($groupBy)
-            ->orderBy('created_at')
-            ->get()
-            ->pluck('count', $groupBy)
-            ->toArray();
+        // Get all visitors in the period
+        $visitors = Visitor::query()
+            ->where('created_at', '>=', $startDate)
+            ->get();
 
-        // Get visitor counts by browser
-        $visitorsByBrowser = Visitor::query()->where('created_at', '>=', $startDate)
-            ->select('browser', DB::raw('COUNT(*) as count'))
-            ->groupBy('browser')
-            ->orderBy('count', 'desc')
-            ->get()
-            ->pluck('count', 'browser')
-            ->toArray();
+        // Process the data in PHP instead of SQL to avoid GROUP BY issues
+        $visitorsByPeriod = [];
+        $visitorsByBrowser = [];
 
-        $totalVisitors = array_sum($visitorsByBrowser);
+        foreach ($visitors as $visitor) {
+            // Format the date based on period
+            if ($period === 'daily') {
+                $key = $visitor->created_at->format('l'); // Day name
+            } elseif ($period === 'weekly') {
+                $key = 'Week ' . $visitor->created_at->format('W'); // Week number
+            } else {
+                $key = $visitor->created_at->format('F'); // Month name
+            }
+
+            // Count by period
+            if (!isset($visitorsByPeriod[$key])) {
+                $visitorsByPeriod[$key] = 0;
+            }
+            $visitorsByPeriod[$key]++;
+
+            // Count by browser
+            if (!isset($visitorsByBrowser[$visitor->browser])) {
+                $visitorsByBrowser[$visitor->browser] = 0;
+            }
+            $visitorsByBrowser[$visitor->browser]++;
+        }
+
+        // Sort the periods chronologically
+        if ($period === 'daily') {
+            // Sort days of week
+            $daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+            $sorted = [];
+            foreach ($daysOfWeek as $day) {
+                if (isset($visitorsByPeriod[$day])) {
+                    $sorted[$day] = $visitorsByPeriod[$day];
+                }
+            }
+            $visitorsByPeriod = $sorted;
+        }
+
+        // Sort browsers by count (descending)
+        arsort($visitorsByBrowser);
+
+        $totalVisitors = count($visitors);
 
         return [
             'total' => $totalVisitors,
@@ -139,7 +158,7 @@ class DashboardService
                 return [
                     'type' => 'blog',
                     'title' => $blog->title,
-                    'excerpt' => $blog->subtitle,
+                    'subtitle' => $blog->subtitle,
                     'image' => $blog->featured_image,
                     'updated_at' => $blog->updated_at,
                     'formatted_updated_at' => $blog->updated_at ? $blog->updated_at->diffForHumans() : null,
@@ -154,7 +173,7 @@ class DashboardService
                 return [
                     'type' => 'product',
                     'title' => $product->title,
-                    'excerpt' => $product->summary,
+                    'summary' => $product->summary,
                     'image' => $product->image,
                     'updated_at' => $product->updated_at,
                     'formatted_updated_at' => $product->updated_at ? $product->updated_at->diffForHumans() : null,
@@ -169,7 +188,7 @@ class DashboardService
                 return [
                     'type' => 'service',
                     'title' => $service->title,
-                    'excerpt' => $service->summary_short,
+                    'summary_short' => $service->summary_short,
                     'image' => $service->image,
                     'updated_at' => $service->updated_at,
                     'formatted_updated_at' => $service->updated_at ? $service->updated_at->diffForHumans() : null,

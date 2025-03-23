@@ -45,7 +45,8 @@ class DashboardResource extends JsonResource
              * @var array|null $top_blogs
              * @example [{"id": 1, "title": "Sample Blog Post", "views": 1500}]
              */
-            'top_blogs' => BlogPostResource::collection($this->whenLoaded('top_blogs')),
+//            'top_blogs' => BlogPostResource::collection($this->whenLoaded('top_blogs')),
+            'top_blogs' => isset($this['top_blogs']) ? BlogPostResource::collection($this['top_blogs']) : null,
 
             /**
              * Recent activity across the platform.

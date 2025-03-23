@@ -3,12 +3,12 @@
 namespace Database\Factories;
 
 use App\Enums\BlogPostStatusEnum;
+use App\Models\BlogPost;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\BlogPost>
+ * @extends Factory<BlogPost>
  */
 class BlogPostFactory extends Factory
 {
@@ -21,46 +21,55 @@ class BlogPostFactory extends Factory
     {
         return [
             'title' => $this->faker->sentence(),
-            'subtitle' => $this->faker->optional(0.7)->sentence(),
+            'subtitle' => $this->faker->sentence(),
             'body' => $this->faker->paragraphs(5, true),
-            'banner_image' => 'blog/banners/placeholder-' . Str::random(10) . '.jpg',
-            'caption' => $this->faker->optional(0.5)->sentence(),
-            'status' => $this->faker->randomElement(BlogPostStatusEnum::values()),
+            'banner_image' => 'public/blog/banners/' . $this->faker->image('public/storage/blog/banners', 1200, 600, null, false),
+            'caption' => $this->faker->sentence(),
+            'status' => $this->faker->randomElement(BlogPostStatusEnum::cases())->value,
             'user_id' => User::factory(),
-            'created_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
-            'updated_at' => function (array $attributes) {
-                return $this->faker->dateTimeBetween($attributes['created_at'], 'now');
-            },
+            'views' => $this->faker->numberBetween(0, 5000),
         ];
     }
 
     /**
      * Indicate that the blog post is published.
+     *
+     * @return Factory
      */
-    public function published(): static
+    public function published(): Factory
     {
-        return $this->state(fn(array $attributes) => [
-            'status' => BlogPostStatusEnum::PUBLISHED->value,
-        ]);
+        return $this->state(function (array $attributes) {
+            return [
+                'status' => BlogPostStatusEnum::PUBLISHED->value,
+            ];
+        });
     }
 
     /**
-     * Indicate that the blog post is a draft.
+     * Indicate that the blog post is draft.
+     *
+     * @return Factory
      */
-    public function draft(): static
+    public function draft(): Factory
     {
-        return $this->state(fn(array $attributes) => [
-            'status' => BlogPostStatusEnum::DRAFT->value,
-        ]);
+        return $this->state(function (array $attributes) {
+            return [
+                'status' => BlogPostStatusEnum::DRAFT->value,
+            ];
+        });
     }
 
     /**
      * Indicate that the blog post is archived.
+     *
+     * @return Factory
      */
-    public function archived(): static
+    public function archived(): Factory
     {
-        return $this->state(fn(array $attributes) => [
-            'status' => BlogPostStatusEnum::ARCHIVED->value,
-        ]);
+        return $this->state(function (array $attributes) {
+            return [
+                'status' => BlogPostStatusEnum::ARCHIVED->value,
+            ];
+        });
     }
 }

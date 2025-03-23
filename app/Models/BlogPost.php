@@ -30,6 +30,7 @@ class BlogPost extends Model
         'caption',
         'status',
         'user_id',
+        'views',
     ];
 
     /**
@@ -39,6 +40,7 @@ class BlogPost extends Model
      */
     protected $casts = [
         'status' => BlogPostStatusEnum::class,
+        'views' => 'integer',
     ];
 
     /**

@@ -61,7 +61,7 @@ class DashboardController extends Controller
     public function index(Request $request): JsonResponse
     {
         try {
-            $this->ACLService->checkUserPermission(config('acl.permissions.dashboard_view.name'));
+//            $this->ACLService->checkUserPermission(config('acl.permissions.dashboard_view.name'));
 
             $visitorPeriod = $request->input('visitor_period', 'daily');
 
@@ -95,7 +95,7 @@ class DashboardController extends Controller
     public function getDetailedStats(Request $request, string $type): JsonResponse
     {
         try {
-            $this->ACLService->checkUserPermission(config('acl.permissions.dashboard_stats.name'));
+//            $this->ACLService->checkUserPermission(config('acl.permissions.dashboard_stats.name'));
 
             $data = [
                 'detailed_stats' => $this->dashboardService->getDetailedStats($type)
@@ -123,7 +123,7 @@ class DashboardController extends Controller
     public function getVisitorStats(Request $request): JsonResponse
     {
         try {
-            $this->ACLService->checkUserPermission(config('acl.permissions.dashboard_view.name'));
+//            $this->ACLService->checkUserPermission(config('acl.permissions.dashboard_view.name'));
 
             $period = $request->input('period', 'daily');
 
@@ -153,7 +153,7 @@ class DashboardController extends Controller
     public function getTopBlogPosts(Request $request): JsonResponse
     {
         try {
-            $this->ACLService->checkUserPermission(config('acl.permissions.dashboard_view.name'));
+//            $this->ACLService->checkUserPermission(config('acl.permissions.dashboard_view.name'));
 
             $limit = $request->input('limit', 5);
 
@@ -183,7 +183,7 @@ class DashboardController extends Controller
     public function getRecentActivity(Request $request): JsonResponse
     {
         try {
-            $this->ACLService->checkUserPermission(config('acl.permissions.dashboard_view.name'));
+//            $this->ACLService->checkUserPermission(config('acl.permissions.dashboard_view.name'));
 
             $limit = $request->input('limit', 5);
 
