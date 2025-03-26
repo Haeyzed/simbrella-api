@@ -42,7 +42,7 @@ class RegisterRequest extends BaseRequest
              * @var string $email
              * @example "user@example.com"
              */
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
 
             /**
              * The password for the user.
