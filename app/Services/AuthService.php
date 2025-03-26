@@ -43,7 +43,7 @@ class AuthService
         $userData['password'] = Hash::make($userData['password']);
 
         $user = DB::transaction(function () use ($userData, $roles, $permissions) {
-            $user = User::create($userData);
+            $user = User::query()->create($userData);
             if (!empty($roles)) $user->assignRole($roles);
             if (!empty($permissions)) $user->givePermissionTo($permissions);
             return $user;

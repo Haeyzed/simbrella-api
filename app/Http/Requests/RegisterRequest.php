@@ -21,12 +21,20 @@ class RegisterRequest extends BaseRequest
     {
         return [
             /**
-             * The name of the user.
+             * The first name of the user.
              *
-             * @var string $name
-             * @example "John Doe"
+             * @var string $first_name
+             * @example "John"
              */
-            'name' => ['required', 'string', 'max:255'],
+            'first_name' => ['required', 'string', 'max:255'],
+
+            /**
+             * The last name of the user.
+             *
+             * @var string $last_name
+             * @example "Doe"
+             */
+            'last_name' => ['required', 'string', 'max:255'],
 
             /**
              * The email address of the user.
