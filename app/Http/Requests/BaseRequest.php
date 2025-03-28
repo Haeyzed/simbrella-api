@@ -43,10 +43,11 @@ class BaseRequest extends FormRequest
             ->toArray();
 
         throw new HttpResponseException(
-            response()->unprocessableEntity(
-                TranslateTextHelper::translate('Validation failed'),
-                $translatedErrors
-            )
+            response()->json([
+                'success' => false,
+                'message' => TranslateTextHelper::translate('Validation failed'),
+                'errors' => $translatedErrors
+            ], 422)
         );
     }
 }
