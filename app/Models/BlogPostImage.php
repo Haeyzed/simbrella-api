@@ -37,10 +37,14 @@ class BlogPostImage extends Model
     /**
      * Get the image URL.
      *
-     * @return string
+     * @return string|null
      */
-    public function getImageUrlAttribute(): string
+    public function getImageUrlAttribute(): ?string
     {
+        if (!$this->image_path) {
+            return null;
+        }
+
         return app(StorageService::class)->url($this->image_path);
     }
 }
