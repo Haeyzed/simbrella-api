@@ -28,9 +28,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        RateLimiter::for('api', function (Request $request) {
+        RateLimiter::for('global', function (Request $request) {
+//            return Limit::perMinute(1000);
             return Limit::none(); // no limit
         });
+//        RateLimiter::for('api', function (Request $request) {
+//            return Limit::none(); // no limit
+//        });
         $this->customizeResetPasswordUrl();
         $this->customizeVerificationUrl();
         $this->configureScramble();
