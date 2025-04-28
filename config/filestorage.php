@@ -54,9 +54,9 @@ return [
     'paths' => [
         'about_images' => config('app.name').'/'.env('FILESTORAGE_ABOUT_IMAGES_PATH', config('app.name').'/about/images'),
         'page_images' => config('app.name').'/'.env('FILESTORAGE_PAGE_IMAGES_PATH', config('app.name').'/page/images'),
+        'blog_images' => config('app.name').'/'.env('FILESTORAGE_BLOG_IMAGES_PATH', config('app.name').'/blog/images'),
         'blog_banners' => config('app.name').'/'.env('FILESTORAGE_BLOG_BANNERS_PATH', config('app.name').'/blog/banners'),
         'career_banners' => config('app.name').'/'.env('FILESTORAGE_CAREER_BANNERS_PATH', config('app.name').'/career/banners'),
-        'blog_images' => config('app.name').'/'.env('FILESTORAGE_BLOG_IMAGES_PATH', config('app.name').'/blog/images'),
         'hero_images' => config('app.name').'/'.env('FILESTORAGE_HERO_IMAGES_PATH', config('app.name').'/hero/images'),
         'user_profiles' => config('app.name').'/'.env('FILESTORAGE_USER_PROFILES_PATH', config('app.name').'/user/profiles'),
         'client_logos' => config('app.name').'/'.env('FILESTORAGE_CLIENT_LOGOS_PATH', config('app.name').'/client/logos'),
