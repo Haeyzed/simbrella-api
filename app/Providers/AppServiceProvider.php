@@ -32,9 +32,9 @@ class AppServiceProvider extends ServiceProvider
 //            return Limit::perMinute(1000);
             return Limit::none(); // no limit
         });
-//        RateLimiter::for('api', function (Request $request) {
-//            return Limit::none(); // no limit
-//        });
+        RateLimiter::for('api', function (Request $request) {
+            return Limit::none(); // no limit
+        });
         $this->customizeResetPasswordUrl();
         $this->customizeVerificationUrl();
         $this->configureScramble();
